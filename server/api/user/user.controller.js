@@ -5,9 +5,9 @@ module.exports = {
 
     createUser: async (req, res) => {
         try {
-            await userService.createdUser()
+             const createdUser = await userService.createdUser(req.body)
 
-            res.status(201).json()
+            res.status(201).json(createdUser);
         } catch (e) {
            
         }
