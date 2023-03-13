@@ -1,5 +1,5 @@
 const User = require('../../dataBase/user')
-const { hashPassword } = require('../../services/oauth.service')
+const bcrypt = require('../../services/oauth.service')
 
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     },
 
     createdUser: async (userObject) => {
-        const hashPassword = await hashPassword(userObject.password)
+        const hashPassword = await bcrypt.hashPassword(userObject.password)
         return User.create({ ...userObject, password: hashPassword })
     }
 
