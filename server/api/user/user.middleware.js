@@ -17,7 +17,7 @@ module.exports = {
         }
     },
 
-    userValidator: (req, res, next) => {
+    userValidator:  (req, res, next) => {
         try {
             const { error } = ValidUserSchema.validate(req.body)
 
