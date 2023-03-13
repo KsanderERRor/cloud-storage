@@ -4,15 +4,16 @@ const userService = require('./user.service')
 module.exports = {
     checkUserDyplicates: async (req, res, next) => {
         try {
-              const user = await userService.findByParams(req.body.email)
+            const user = await userService.findByEmail(req.body.email)
 
-              if(user){
-                res.status(400).json({message:`User with  email ${email} already exists`})
-              } 
+            
+            if (user) {
+                res.status(400).json({ message: `User with  email ${user.email} already exists` })
+            }
 
-              next()
+            next()
         } catch (e) {
-            throw new Error (e)
+            throw new Error(e)
         }
     }
 }

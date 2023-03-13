@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     discSpace: { type: Number, default: 1024 ** 3 * 10 },
     userSpace: { type: Number, default: 0 },
     avatar: { type: String, },
-    files: [{type: Schema.Types.ObjectId, ref:'File'  }]
+    // files: [{type: Schema.Types.ObjectId, ref:'File'  }]
 })
 
 module.exports = model('User', UserSchema)

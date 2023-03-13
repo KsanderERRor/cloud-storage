@@ -3,8 +3,10 @@ const bcrypt = require('../../services/oauth.service')
 
 
 module.exports = {
-    findByParams: (SearchParams) => {
-        return User.findOne(SearchParams)
+    findByEmail: async (email) => {
+        const user =  await User.findOne({email})
+
+        return  user;
     },
 
     createdUser: async (userObject) => {
