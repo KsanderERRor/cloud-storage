@@ -1,0 +1,1 @@
+maybe i need to use npx catalog 'config'?

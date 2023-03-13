@@ -3,6 +3,7 @@ const bcrypt = require('../../services/oauth.service')
 
 
 module.exports = {
+
     findByEmail: async (email) => {
         const user =  await User.findOne({email})
 
@@ -11,7 +12,8 @@ module.exports = {
 
     createdUser: async (userObject) => {
         const hashPassword = await bcrypt.hashPassword(userObject.password)
+        
         return User.create({ ...userObject, password: hashPassword })
-    }
+    },
 
 }
