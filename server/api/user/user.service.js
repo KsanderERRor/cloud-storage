@@ -1,4 +1,4 @@
-const User = require('../../dataBase/user')
+const User = require('../../data-base/user')
 const bcrypt = require('../../services/oauth.service')
 
 
