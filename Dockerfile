@@ -1,10 +1,10 @@
- FROM node:latest
+FROM node:latest
 
  RUN mkdir -p /app
  WORKDIR /app
  
  COPY package.json /app
-
+ COPY server/ /app
  RUN npm install
 
  COPY . /app
@@ -13,4 +13,4 @@
  
  ENTRYPOINT ["node"]
 
- CMD ["node","app.js"]
+ CMD ["app.js"]
