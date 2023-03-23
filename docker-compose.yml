@@ -5,8 +5,8 @@ services:
            image: sub-project
            restart: always
            build: .
-          #  environment:
-          #    MONGO_URL: 'mongodb://mongo:27017'
+           environment:
+             MONGO_URL: ${MONGO_URL}
            ports:
              - "5200:5200"
            links:
