@@ -1,0 +1,25 @@
+# COMPRISE cloud-storage 
+the start of  create  cloud storage like 'google disc'
+
+## Prerequisites
+
+Cloud-based Platform depends on several external services that should be set up beforehand:
+- Mongo database service
+
+## Configuration
+Docker-compose and  app.js use .env file for reading and storing configuration.
+Please see env.example file which describes all configuration parameters.
+
+bild .env file of env.example
+```
+cp .env.example .env
+```
+### API service
+
+API service use variables.js file in configs folder for reading and storing configuration.
+
+## Building Docker images
+### start docker container
+```
+docker-compose up -- build
+```
