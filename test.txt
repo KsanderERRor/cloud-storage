@@ -1,8 +1,0 @@
- npx prettier --write . // 
- npx prettier --check . //
-
- npx husky install  //
- npx husky add .husky/pre-commit "npx lint-staged" //
-
- npx husky-init
-  npx husky-init yarn

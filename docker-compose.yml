@@ -1,0 +1,21 @@
+version: "3"
+services:
+       sub-project:
+           container_name: cloud_storage
+           image: sub-project
+           restart: always
+           build: .
+           env_file: ./.env
+           environment:
+            MONGO_URL: ${MONGO_URL_DOCKER}
+           ports:
+             - $PORT:$PORT_DOCKER
+           links:
+             - mongo
+       mongo:
+             container_name: mongo
+             image: mongo
+             volumes:
+               - ./data:/data/db
+             ports:
+               - '27017:27017'
