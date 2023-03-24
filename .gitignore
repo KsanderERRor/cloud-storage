@@ -1,8 +1,6 @@
 build
 coverage
-node_modules 
-package.json
-package-lock.json
+node_modules
 test.txt
 data
 .env
