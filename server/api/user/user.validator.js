@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 const joi = require("joi");
 
-// eslint-disable-next-line import/extensions
 const { EMAIL_REX, PASSWORD_REX } = require("../../configs/regax.js");
 
 module.exports = {
