@@ -7,9 +7,7 @@ module.exports = {
       const user = await userService.findByEmail(req.body.email);
 
       if (user) {
-        res
-          .status(400)
-          .json({ message: `User with  email ${user.email} already exists` });
+        res.status(400).json({ message: `User with  email ${user.email} already exists` });
       }
 
       next();

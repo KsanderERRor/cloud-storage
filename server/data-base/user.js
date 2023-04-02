@@ -17,6 +17,7 @@ const UserSchema = new Schema({
   discSpace: { type: Number, default: 1024 ** 3 * 10 },
   userSpace: { type: Number, default: 0 },
   avatar: { type: String },
+  is_deleted: {type: Boolean, default: false, required: true },
   // files: [{type: Schema.Types.ObjectId, ref:'File'  }]
 });
 

@@ -13,4 +13,13 @@ module.exports = {
 
     return User.create({ ...userObject, password: hashPassword });
   },
+
+  deleteUserByID: async (userId) => {
+    return deletedUser = await User.findByIdAndUpdate(userId, { $set: { is_deleted: true } });
+  },
+
+  getUserByID: async (userId) => {
+    return await User.findById(userId)
+  }
+  
 };

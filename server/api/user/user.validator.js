@@ -17,5 +17,6 @@ module.exports = {
     discSpace: joi.number().min(0),
     userSpace: joi.number().min(0),
     avatar: joi.string(),
+    is_deleted: joi.boolean(),
   }),
 };
