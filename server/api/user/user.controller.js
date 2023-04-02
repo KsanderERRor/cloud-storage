@@ -25,7 +25,17 @@ module.exports = {
     try {
       const user = await userService.getUserByID(req.params.userId);
 
-      res.json(user)
+      res.json(user);
+    } catch (e) {
+      next(e)
+    }
+  },
+
+  updateOneUserByID: async (req, res, next) => {
+    try {
+       const updatedUser = await userService.updateUserByID(req.params.userId, req.body)
+       
+       res.json('user was update')
     } catch (e) {
       next(e)
     }

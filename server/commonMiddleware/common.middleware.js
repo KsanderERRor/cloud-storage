@@ -19,7 +19,7 @@ module.exports = {
   },
 
   userIsNotDeleted: (req, res, next) => {
-    req.locals.user.is_deleted === false ? next() : res.json('user is deleted');
+    req.locals.user.is_deleted === false ? next() : res.json('user was delete');
   },
 
 }

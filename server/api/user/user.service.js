@@ -19,7 +19,11 @@ module.exports = {
   },
 
   getUserByID: async (userId) => {
-    return await User.findById(userId)
+    return await User.findById(userId);
+  },
+
+  updateUserByID: async (userId,updateData) => {
+    return await User.findByIdAndUpdate(userId,updateData)
   }
   
 };

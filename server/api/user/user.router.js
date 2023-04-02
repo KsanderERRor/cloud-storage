@@ -11,5 +11,5 @@ userRouter.post("/registration", mdlw.userValidator, mdlw.checkUserDyplicates, u
 userRouter.use("/:userId", commonMdlw.checkUser, commonMdlw.userIsNotDeleted) // use for
 userRouter.delete("/:userId", userController.deleteUser);
 userRouter.get("/:userId", userController.getOneUserByID) //2 req in datebase ):
-
+userRouter.put("/:userId", userController.updateOneUserByID)
 module.exports = userRouter;
