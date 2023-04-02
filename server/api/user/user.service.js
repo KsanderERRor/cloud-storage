@@ -23,7 +23,22 @@ module.exports = {
   },
 
   updateUserByID: async (userId,updateData) => {
-    return await User.findByIdAndUpdate(userId,updateData)
+    return await User.findByIdAndUpdate(userId,updateData);
+  },
+
+  getAllUsersPagination: async ( query = {} ) => {
+    const { page = 1, perPage = 5 } = query;
+    const skip = (page - 1) * perPage;
+
+    const user = await User.find().limit(perPage).skip(skip);
+    const count = await User.count();
+
+    return {
+      data: user,
+      page,
+      perPage,
+      total: count
+    };
   }
   
 };

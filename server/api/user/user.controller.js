@@ -7,7 +7,7 @@ module.exports = {
 
       res.status(201).json(createdUser);
     } catch (e) {
-      //   console.log(e);
+      next(e);
     }
   },
 
@@ -27,15 +27,24 @@ module.exports = {
 
       res.json(user);
     } catch (e) {
-      next(e)
+      next(e);
     }
   },
 
   updateOneUserByID: async (req, res, next) => {
     try {
-       const updatedUser = await userService.updateUserByID(req.params.userId, req.body)
+       const updatedUser = await userService.updateUserByID(req.params.userId, req.body);
        
-       res.json('user was update')
+       res.json('user was update');
+    } catch (e) {
+      next(e);
+    }
+  },
+  getAllUsersPagination: async (req, res, next) => {
+    try {
+      const users = await userService.getAllUsersPagination(req.query);
+
+      res.json(users)
     } catch (e) {
       next(e)
     }

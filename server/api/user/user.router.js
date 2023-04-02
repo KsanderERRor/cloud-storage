@@ -5,8 +5,11 @@ const commonMdlw = require("../../commonMiddleware/common.middleware")
 const userController = require("./user.controller");
 
 
+userRouter.get("/", userController.getAllUsersPagination)
+
 
 userRouter.post("/registration", mdlw.userValidator, mdlw.checkUserDyplicates, userController.createUser );
+
 
 userRouter.use("/:userId", commonMdlw.checkUser, commonMdlw.userIsNotDeleted) // use for
 userRouter.delete("/:userId", userController.deleteUser);
