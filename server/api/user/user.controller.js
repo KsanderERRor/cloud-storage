@@ -33,7 +33,7 @@ module.exports = {
 
   updateOneUserByID: async (req, res, next) => {
     try {
-       const updatedUser = await userService.updateUserByID(req.params.userId, req.body);
+       await userService.updateUserByID(req.params.userId, req.body);
        
        res.json('user was update');
     } catch (e) {

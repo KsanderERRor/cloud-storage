@@ -11,11 +11,11 @@ module.exports = {
   createdUser: async (userObject) => {
     const hashPassword = await bcrypt.hashPassword(userObject.password);
 
-    return User.create({ ...userObject, password: hashPassword });
+    return await User.create({ ...userObject, password: hashPassword });
   },
 
   deleteUserByID: async (userId) => {
-    return deletedUser = await User.findByIdAndUpdate(userId, { $set: { is_deleted: true } });
+    deletedUser = await User.findByIdAndUpdate(userId, { $set: { is_deleted: true } });
   },
 
   getUserByID: async (userId) => {

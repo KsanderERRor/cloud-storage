@@ -19,7 +19,7 @@ module.exports = {
   },
 
   userIsNotDeleted: (req, res, next) => {
-    req.locals.user.is_deleted === false ? next() : res.json('user was delete');
+    req.locals.user.is_deleted === false ? next() : res.status(404).json({error: true, message: 'user not found'});
   },
 
 }
