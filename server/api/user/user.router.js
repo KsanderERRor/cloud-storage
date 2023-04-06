@@ -5,7 +5,7 @@ const commonMdlw = require("../../commonMiddleware/common.middleware")
 const userController = require("./user.controller");
 
 
-userRouter.get("/", userController.getAllUsersPagination)
+userRouter.get("/",mdlw.QueryPaginationValidator, userController.getAllUsersPagination)
 
 
 userRouter.post("/registration", mdlw.userValidator, mdlw.checkUserDyplicates, userController.createUser );
@@ -14,5 +14,5 @@ userRouter.post("/registration", mdlw.userValidator, mdlw.checkUserDyplicates, u
 userRouter.use("/:userId", commonMdlw.checkUser, commonMdlw.userIsNotDeleted) // use for
 userRouter.delete("/:userId", userController.deleteUser);
 userRouter.get("/:userId", userController.getOneUserByID) //2 req in datebase ):
-userRouter.put("/:userId", userController.updateOneUserByID)
+userRouter.put("/:userId", mdlw.UpdateUserValidator, userController.updateOneUserByID)
 module.exports = userRouter;

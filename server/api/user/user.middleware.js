@@ -1,5 +1,5 @@
 const userService = require("./user.service");
-const { ValidUserSchema } = require("./user.validator");
+const validateSchema = require("./user.validator");
 
 module.exports = {
   checkUserDyplicates: async (req, res, next) => {
@@ -18,7 +18,31 @@ module.exports = {
 
   userValidator: (req, res, next) => {
     try {
-      const { error } = ValidUserSchema.validate(req.body);
+      const { error } = validateSchema.ValidUserSchema.validate(req.body);
+
+      if (error) throw new Error(error);
+
+      next();
+    } catch (e) {
+      throw new Error(e);
+    }
+  },
+
+  QueryPaginationValidator: (req, res, next) => {
+    try {
+      const { error } = validateSchema.ValidQuerySchema.validate(req.query);
+
+      if (error) throw new Error(error);
+
+      next();
+    } catch (e) {
+      throw new Error(e);
+    }
+  },
+
+  UpdateUserValidator: (req, res, next) => {
+    try {
+      const { error } = validateSchema.ValidUserUpdateSchema.validate(req.body);
 
       if (error) throw new Error(error);
 
