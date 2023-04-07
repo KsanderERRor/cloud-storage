@@ -76,12 +76,26 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "prettier": "2.8.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown",
+      "git add "
+    ]
   },
   "scripts": {
     "start": "npx nodemon server/app.js",
-    "fix": "prettier --write .",
-    "check": "prettier --check ."
+    "prettier:fix": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
