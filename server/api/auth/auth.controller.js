@@ -1,13 +1,14 @@
-const { checkUser } = require("./auth.middleware");
-const oauthService = require('../../services/oauth.service')
-const service = require('./auth.service')
+/* eslint-disable no-underscore-dangle */
+const oauthService = require('../../services/oauth.service');
+const service = require('./auth.service');
+
 module.exports = {
   loginUser: async (req, res, next) => {
     try {
-      const user = req.locals.user;
+      const { user } = req.locals;
 
       await oauthService.checkPasswords(user.password, req.body.password);
-      const tokenPair = oauthService.generateAccessTokenPair({...user});
+      const tokenPair = oauthService.generateAccessTokenPair({ ...user });
 
       await service.createOauthPair({ ...tokenPair, user: user._id });
       res.json({
@@ -17,5 +18,5 @@ module.exports = {
     } catch (e) {
       next(e);
     }
-  },
+  }
 };

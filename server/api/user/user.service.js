@@ -1,5 +1,5 @@
-const User = require("../../data-base/user");
-const bcrypt = require("../../services/oauth.service");
+const User = require('../../data-base/user');
+const bcrypt = require('../../services/oauth.service');
 
 module.exports = {
   findByEmail: async (email) => {
@@ -11,22 +11,18 @@ module.exports = {
   createdUser: async (userObject) => {
     const hashPassword = await bcrypt.hashPassword(userObject.password);
 
-    return await User.create({ ...userObject, password: hashPassword });
+    return User.create({ ...userObject, password: hashPassword });
   },
 
   deleteUserByID: async (userId) => {
-    deletedUser = await User.findByIdAndUpdate(userId, { $set: { is_deleted: true } });
+    await User.findByIdAndUpdate(userId, { $set: { is_deleted: true } });
   },
 
-  getUserByID: async (userId) => {
-    return await User.findById(userId);
-  },
+  getUserByID: async (userId) => User.findById(userId),
 
-  updateUserByID: async (userId,updateData) => {
-    return await User.findByIdAndUpdate(userId,updateData);
-  },
+  updateUserByID: async (userId, updateData) => User.findByIdAndUpdate(userId, updateData),
 
-  getAllUsersPagination: async ( query = {} ) => {
+  getAllUsersPagination: async (query = {}) => {
     const { page = 1, perPage = 5 } = query;
     const skip = (page - 1) * perPage;
 
@@ -40,5 +36,4 @@ module.exports = {
       total: count
     };
   }
-  
 };

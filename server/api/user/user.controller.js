@@ -1,7 +1,7 @@
-const userService = require("./user.service");
+const userService = require('./user.service');
 
 module.exports = {
-  createUser: async (req, res) => {
+  createUser: async (req, res, next) => {
     try {
       const createdUser = await userService.createdUser(req.body);
 
@@ -33,9 +33,9 @@ module.exports = {
 
   updateOneUserByID: async (req, res, next) => {
     try {
-       await userService.updateUserByID(req.params.userId, req.body);
-       
-       res.json('user was update');
+      await userService.updateUserByID(req.params.userId, req.body);
+
+      res.json('user was update');
     } catch (e) {
       next(e);
     }
@@ -44,9 +44,9 @@ module.exports = {
     try {
       const users = await userService.getAllUsersPagination(req.query);
 
-      res.json(users)
+      res.json(users);
     } catch (e) {
-      next(e)
+      next(e);
     }
   }
 };
