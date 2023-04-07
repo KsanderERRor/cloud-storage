@@ -1,7 +1,6 @@
-const userService = require("../api/user/user.service");
+const userService = require('../api/user/user.service');
 
 module.exports = {
-
   checkUser: async (req, res, next) => {
     try {
       const user = await userService.getUserByID(req.params.userId);
@@ -10,7 +9,7 @@ module.exports = {
         res.json({ message: `User with id ${req.params.userId} is not defined` });
       }
 
-      req.locals = {...req.locals, user };
+      req.locals = { ...req.locals, user };
 
       next();
     } catch (e) {
@@ -19,7 +18,7 @@ module.exports = {
   },
 
   userIsNotDeleted: (req, res, next) => {
-    req.locals.user.is_deleted === false ? next() : res.status(404).json({error: true, message: 'user not found'});
-  },
-
-}
+    if (req.locals.user.is_deleted === false) next();
+    else res.status(404).json({ error: true, message: 'user not found' });
+  }
+};

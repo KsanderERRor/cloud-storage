@@ -1,5 +1,5 @@
-const userService = require("./user.service");
-const validateSchema = require("./user.validator");
+const userService = require('./user.service');
+const validateSchema = require('./user.validator');
 
 module.exports = {
   checkUserDyplicates: async (req, res, next) => {
@@ -50,5 +50,5 @@ module.exports = {
     } catch (e) {
       throw new Error(e);
     }
-  },
+  }
 };
