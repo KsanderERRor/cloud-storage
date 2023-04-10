@@ -88,8 +88,7 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "prettier --write --ignore-unknown",
-      "add"
+      "prettier --write --ignore-unknown"
     ]
   },
   "scripts": {
