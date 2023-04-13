@@ -121,6 +121,52 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "oauth",
+      "item": [
+        {
+          "name": "loginUser",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"maxSer@gmail.com\",\n    \"password\": \"Password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{api_local}}/auth/login",
+              "host": ["{{api_local}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logoutUser",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjQzNzFlNGQ5ZTk2OThiZTk4YjllNDQ4IiwiaWF0IjoxNjgxMzMzODUzLCJleHAiOjE2ODEzMzQ3NTN9.TZT4htGFxRvV4uPExLzkEJYEVgKIe2xEHeOs3Opn270",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{api_local}}/auth/logout",
+              "host": ["{{api_local}}"],
+              "path": ["auth", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }

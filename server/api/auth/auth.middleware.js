@@ -1,4 +1,5 @@
 const userService = require('../user/user.service');
+const oauthService = require('../../services/oauth.service');
 
 module.exports = {
   checkUser: async (req, res, next) => {
@@ -11,6 +12,22 @@ module.exports = {
 
       req.locals = { ...req.locals, user };
       // console.log(req.locals,"req---locals");
+      next();
+    } catch (e) {
+      throw new Error(e);
+    }
+  },
+
+  validateAccessToken: (req, res, next) => {
+    try {
+      const accessToken = req.get('Authorization');
+
+      if (!accessToken) {
+        res.status(400).json({ message: 'token is not found' });
+      }
+
+      oauthService.validateAccessToken(accessToken);
+
       next();
     } catch (e) {
       throw new Error(e);

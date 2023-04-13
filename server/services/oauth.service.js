@@ -22,5 +22,13 @@ module.exports = {
       accessToken,
       refreshToken
     };
+  },
+
+  validateAccessToken: (accessToken) => {
+    try {
+      return jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
+    } catch (e) {
+      throw new Error();
+    }
   }
 };
