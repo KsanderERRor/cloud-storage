@@ -167,6 +167,27 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "file",
+      "item": [
+        {
+          "name": "createdir",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "uploadFile",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }
