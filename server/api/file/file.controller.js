@@ -19,5 +19,14 @@ module.exports = {
         message: `Unable to upload the file:. ${err}`
       });
     }
+  },
+
+  getFileByParams: async (req, res) => {
+    try {
+      const files = await fileService.getFileByParams(req.query);
+      res.json(files);
+    } catch (e) {
+      console.log(e);
+    }
   }
 };
