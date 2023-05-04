@@ -1,4 +1,5 @@
 const uploadFile = require('./file.upload');
+const fileService = require('./file.service');
 
 module.exports = {
   upload: async (req, res) => {
@@ -7,6 +8,9 @@ module.exports = {
       if (req.file === undefined) {
         res.status(400).send({ message: 'Upload a file please!' });
       }
+
+      await fileService.createFile(req.file, req.body.user);
+
       res.status(200).send({
         message: `The following file was uploaded successfully: ${req.file.originalname}`
       });
