@@ -14,6 +14,10 @@ bild .env file of env.example
 ```
 cp .env.example .env
 ```
+create storage folder 
+```
+mkdir storage
+
 ### API service
 
 API service use variables.js file in configs folder for reading and storing configuration.

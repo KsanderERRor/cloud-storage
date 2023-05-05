@@ -1,9 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-console */
-
 const express = require('express');
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
+const bodyParser = require('body-parser');
 
 const { PORT, MONGO_URL } = require('./configs/variables');
 const mainRouter = require('./api/api.router');
@@ -13,6 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.set('debug', true);
 mongoose.connect(MONGO_URL);
@@ -25,5 +24,5 @@ try {
     console.log(`app listen ${PORT}`);
   });
 } catch (e) {
-  console.log(e);
+  throw new Error(e);
 }
