@@ -11,7 +11,7 @@ module.exports = {
       }
 
       req.locals = { ...req.locals, user };
-      // console.log(req.locals,"req---locals");
+      // console.log(req.locals,"req---locals___________________________");
       next();
     } catch (e) {
       throw new Error(e);
@@ -26,7 +26,9 @@ module.exports = {
         res.status(400).json({ message: 'token is not found' });
       }
 
-      oauthService.validateAccessToken(accessToken);
+      const user = oauthService.validateAccessToken(accessToken);
+      //  console.log(user,'user________________________________________validate');
+      req.locals = { user };
 
       next();
     } catch (e) {
