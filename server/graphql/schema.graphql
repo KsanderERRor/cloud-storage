@@ -1,0 +1,8 @@
+type User {
+  email: String!
+  password: String!
+  discSpace: Int
+  userSpace: Int
+  avatar: String
+  is_deleted: Boolean!
+}
