@@ -6,3 +6,7 @@ type User {
   avatar: String
   is_deleted: Boolean!
 }
+
+type Query {
+  getAllUsers: [User]
+}
