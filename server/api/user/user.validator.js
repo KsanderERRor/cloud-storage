@@ -19,6 +19,7 @@ module.exports = {
 
   ValidUserUpdateSchema: joi.object({
     email: joi.string().email().error(new Error('new email is not valid')),
+    password: joi.string().regex(PASSWORD_REX).error(new Error('password is not valid')),
     discSpace: joi.number().min(0),
     userSpace: joi.number().min(0),
     avatar: joi.string(),
