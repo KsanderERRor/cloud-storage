@@ -1,42 +1,33 @@
-const mongoose = require('mongoose');
-
 function buildFilterQuery(query = {}) {
-  const sizeFilter = {};
-  const dataFilter = {};
+  const discSpaceFilter = {};
+  const userSpaceFilter = {};
   const filterQuery = {};
-  if (query.size_gte) {
-    sizeFilter.$gte = Number(query.size_gte);
+  if (query.discSpace_gte) {
+    discSpaceFilter.$gte = Number(query.discSpace_gte);
   }
 
-  if (query.size_lte) {
-    sizeFilter.$lte = Number(query.size_lte);
+  if (query.discSpace_lte) {
+    discSpaceFilter.$lte = Number(query.discSpace_lte);
   }
 
-  if (query.date_gte) {
-    dataFilter.$gte = query.date_gte;
+  if (query.userSpace_gte) {
+    userSpaceFilter.$gte = query.userSpace_gte;
   }
 
-  if (query.date_lte) {
-    dataFilter.$lte = query.date_lte;
+  if (query.userSpace_lte) {
+    userSpaceFilter.$lte = query.userSpace_lte;
   }
 
-  if (query.name) {
-    filterQuery.name = query.name;
-  }
-  if (query.user) {
-    const id = query.user;
-    const convertID = new mongoose.Types.ObjectId(id);
-    // const a =  new mongodb.ObjectId(convert);
-
-    filterQuery.user = convertID;
+  if (query.email) {
+    filterQuery.email = query.email;
   }
 
-  if (Object.keys(sizeFilter).length) {
-    filterQuery.size = sizeFilter;
+  if (Object.keys(discSpaceFilter).length) {
+    filterQuery.discSpace = discSpaceFilter;
   }
 
-  if (Object.keys(dataFilter).length) {
-    filterQuery.createdAt = dataFilter;
+  if (Object.keys(userSpaceFilter).length) {
+    filterQuery.userSpace = userSpaceFilter;
   }
 
   return filterQuery;

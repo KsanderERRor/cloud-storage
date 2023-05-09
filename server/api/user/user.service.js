@@ -1,5 +1,6 @@
 const User = require('../../data-base/user');
 const bcrypt = require('../../services/oauth.service');
+const userUtil = require('./user.util');
 
 module.exports = {
   findByEmail: async (email) => {
@@ -30,14 +31,17 @@ module.exports = {
   },
 
   getAllUsersPagination: async (query = {}) => {
-    const { page = 1, perPage = 5 } = query;
+    const { page = 1, perPage = 5, ...filterQuery } = query;
     const skip = (page - 1) * perPage;
 
-    const user = await User.find().limit(perPage).skip(skip);
-    const count = await User.count();
+    const search = userUtil.buildFilterQuery(filterQuery);
+
+    const users = await User.find(search).limit(perPage).skip(skip);
+
+    const count = await User.count(search);
 
     return {
-      data: user,
+      dataUsers: users,
       page,
       perPage,
       total: count

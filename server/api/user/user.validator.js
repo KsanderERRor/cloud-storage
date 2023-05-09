@@ -14,7 +14,12 @@ module.exports = {
 
   ValidQuerySchema: joi.object({
     page: joi.number().min(1).max(5).error(new Error('input is out of range')),
-    perPage: joi.number().min(1).max(5).error(new Error('input is out of range'))
+    perPage: joi.number().min(1).max(5).error(new Error('input is out of range')),
+    email: joi.string().email().error(new Error('email is not valid')),
+    discSpace_gte: joi.number().min(0).max(1000).error(new Error('input is out of range')),
+    discSpace_lte: joi.number().min(0).max(1000).error(new Error('input is out of range')),
+    userSpace_gte: joi.number().min(0).max(1000).error(new Error('input is out of range')),
+    userSpace_lte: joi.number().min(0).max(1000).error(new Error('input is out of range'))
   }),
 
   ValidUserUpdateSchema: joi.object({

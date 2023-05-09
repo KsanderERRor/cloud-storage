@@ -47,9 +47,7 @@ module.exports = {
         return error;
       }
 
-      const { page = 1, perPage = 5 } = arg;
-      const skip = (page - 1) * perPage;
-      return User.find().skip(skip).limit(perPage);
+      return userService.getAllUsersPagination(arg);
     } catch (error) {
       return error;
     }

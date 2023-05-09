@@ -8,9 +8,16 @@ type User {
   is_deleted: Boolean!
 }
 
+type UserPagination {
+  dataUsers: [User!]
+  page: Int
+  perPage: Int
+  total: Int
+}
+
 type Query {
   getOneUserById(id: ID!): User
-  getUsersPagination(page: Int, perPage: Int): [User!]!
+  getUsersPagination(page: Int, perPage: Int, discSpace_gte: Int, discSpace_lte: Int, userSpace_gte: Int, userSpace_lte: Int, email: String): UserPagination!
 }
 
 type Mutation {
