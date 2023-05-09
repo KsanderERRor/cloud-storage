@@ -120,7 +120,35 @@
         },
         {
           "name": "oauth",
-          "item": []
+          "item": [
+            {
+              "name": "loginUser",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "graphql",
+                  "graphql": {
+                    "query": "mutation {\n    loginUser(\n        email: \"example@example.com\"\n        password: \"Password123\"\n        )\n        {\n            accessToken\n            refreshToken\n            userData{\n                _id\n                email\n                password\n                discSpace\n                userSpace\n                avatar\n                is_deleted\n            }\n        }\n}",
+                    "variables": ""
+                  }
+                },
+                "url": {
+                  "raw": "{{api_graphql}}",
+                  "host": ["{{api_graphql}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "logoutUser",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
         },
         {
           "name": "file",
@@ -257,9 +285,9 @@
                   }
                 },
                 "url": {
-                  "raw": "{{api_rest}}auth/login",
-                  "host": ["{{api_rest}}auth"],
-                  "path": ["login"]
+                  "raw": "{{api_rest}}/auth/login",
+                  "host": ["{{api_rest}}"],
+                  "path": ["auth", "login"]
                 }
               },
               "response": []

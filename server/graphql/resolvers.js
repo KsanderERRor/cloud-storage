@@ -1,6 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 const User = require('../data-base/user');
 const validateSchema = require('../api/user/user.validator');
 const userService = require('../api/user/user.service');
+const oauthService = require('../services/oauth.service');
+const authService = require('../api/auth/auth.service');
 
 module.exports = {
   createUser: async (arg) => {
@@ -100,5 +103,40 @@ module.exports = {
     } catch (error) {
       return error;
     }
+  },
+
+  /// ///////////////////////////////////////////////////oauth/////////////////////////////////////////////////////////
+
+  loginUser: async (arg) => {
+    try {
+      const user = await userService.findByEmail(arg.email);
+
+      if (!user) {
+        console.log('___________-');
+        throw new Error(`User with  email ${user.email} not found`);
+      }
+
+      await oauthService.checkPasswords(user.password, arg.password);
+      const tokenPair = oauthService.generateAccessTokenPair({ user: user._id });
+
+      const tokens = (await authService.createOauthPair({ ...tokenPair, user: user._id })).toObject();
+
+      return { ...tokens, userData: user };
+    } catch (error) {
+      return error;
+    }
+  },
+
+  logoutUser: async (arg) => {
+    try {
+      const accessToken = arg.token;
+      console.log(accessToken);
+      await authService.deleteByParams({ accessToken });
+      return { message: 'user was delete' };
+    } catch (error) {
+      return error;
+    }
   }
+
+  /// ///////////////////////////////////////////////////file/////////////////////////////////////////////////////////
 };
