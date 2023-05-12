@@ -1,9 +1,12 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
 const User = require('../data-base/user');
 const validateSchema = require('../api/user/user.validator');
 const userService = require('../api/user/user.service');
 const oauthService = require('../services/oauth.service');
 const authService = require('../api/auth/auth.service');
+const uploadUtil = require('./upload.file.util');
+const fileService = require('../api/file/file.service');
 
 module.exports = {
   createUser: async (arg) => {
@@ -136,7 +139,34 @@ module.exports = {
     } catch (error) {
       return error;
     }
-  }
+  },
 
   /// ///////////////////////////////////////////////////file/////////////////////////////////////////////////////////
+
+  upload: async ({ upload, user }) => {
+    try {
+      const { file } = upload;
+      console.log(file);
+      if (!file) {
+        throw new Error('Upload a file please!');
+      }
+      const resoult = await uploadUtil(file);
+
+      await fileService.createFile(resoult, user);
+
+      return { message: `The following file was uploaded successfully: ${file.filename}` };
+    } catch (error) {
+      return error;
+    }
+  },
+
+  getFilesPagination: async (arg) => {
+    try {
+      const files = await fileService.getFileByParams(arg);
+
+      return files;
+    } catch (error) {
+      return error;
+    }
+  }
 };

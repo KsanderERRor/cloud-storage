@@ -3,7 +3,8 @@
 const fs = require('node:fs');
 const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
-const graphUpload = require('graphql-upload');
+// const {graphqlUploadExpress} = require('graphql-upload')
+
 const root = require('./resolvers');
 
 const schema = buildSchema(fs.readFileSync('server/graphql/schema.graphql').toString());
