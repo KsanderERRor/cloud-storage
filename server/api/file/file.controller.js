@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const uploadFile = require('./file.upload');
 const fileService = require('./file.service');
 
@@ -6,7 +7,7 @@ module.exports = {
     try {
       await uploadFile(req, res);
       if (req.file === undefined) {
-        res.status(400).send({ message: 'Upload a file please!' });
+        return res.status(400).send({ message: 'Upload a file please!' });
       }
 
       await fileService.createFile(req.file, req.body.user);
@@ -26,7 +27,7 @@ module.exports = {
       const files = await fileService.getFileByParams(req.query);
       res.json(files);
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   }
 };
