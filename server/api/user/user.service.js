@@ -24,10 +24,10 @@ module.exports = {
   updateUserByID: async (userId, updateData) => {
     if (updateData.password !== undefined) {
       const hashPassword = await bcrypt.hashPassword(updateData.password);
-      return User.findByIdAndUpdate(userId, { ...updateData, password: hashPassword });
+      return User.findByIdAndUpdate(userId, { ...updateData, password: hashPassword }, { new: true });
     }
 
-    return User.findByIdAndUpdate(userId, updateData);
+    return User.findByIdAndUpdate(userId, updateData, { new: true });
   },
 
   getAllUsersPagination: async (query = {}) => {
