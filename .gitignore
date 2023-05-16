@@ -3,6 +3,8 @@ build
 coverage
 node_modules
 data
+sum.js
+sum.test.js
 
 ### dotenv ###
 .env
