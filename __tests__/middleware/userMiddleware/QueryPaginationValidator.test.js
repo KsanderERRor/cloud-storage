@@ -116,16 +116,16 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  // it('should throw error if something is wrong', async () => {
-  //     const error = new Error('unexpected error')
-  //     spyForValidate.mockImplementationOnce(() => {
-  //         throw error
-  //     })
+  it('should throw error if something is wrong', async () => {
+    const error = new Error('unexpected error');
+    spyForValidate.mockImplementationOnce(() => {
+      throw error;
+    });
 
-  //    await expect(QueryPaginationValidator(req, res, next)).rejects.toThrow()
+    expect(() => QueryPaginationValidator(req, res, next)).toThrow();
 
-  //    expect(next).toHaveBeenCalled()
-  // })
+    expect(next).not.toHaveBeenCalled();
+  });
 
   afterEach(() => {
     jest.resetAllMocks();

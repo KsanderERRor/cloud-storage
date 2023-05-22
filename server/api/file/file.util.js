@@ -38,7 +38,6 @@ function buildFilterQuery(query = {}) {
   if (Object.keys(dataFilter).length) {
     filterQuery.createdAt = dataFilter;
   }
-  console.log(filterQuery.createdAt);
 
   return filterQuery;
 }
