@@ -1,10 +1,10 @@
-const file = require('../../data-base/file');
+const File = require('../../data-base/file');
 const fileUtil = require('./file.util');
 
 module.exports = {
   createFile: async (filedata, id) => {
-    const { filename } = filedata;
-    await file.create({ ...filedata, name: filename, user: id });
+    const { filename, path, size } = filedata;
+    return File.create({ path, size, name: filename, user: id });
   },
 
   getFileByParams: async (queryParams = {}) => {
@@ -13,9 +13,9 @@ module.exports = {
 
     const search = fileUtil.buildFilterQuery(filterQuery);
 
-    const files = await file.find(search).skip(skip).limit(perPage);
+    const files = await File.find(search).skip(skip).limit(perPage);
 
-    const count = await file.countDocuments(search);
+    const count = await File.countDocuments(search);
 
     return {
       data: files,

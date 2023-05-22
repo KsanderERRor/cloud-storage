@@ -48,7 +48,8 @@
     "prettier:fix": "prettier --write .",
     "prettier:check": "prettier --check .",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "test --coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
