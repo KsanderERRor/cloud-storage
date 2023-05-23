@@ -25,6 +25,7 @@ describe('check if the user has dyplicates middleware', () => {
 
     await checkUserDyplicates(req, res, next);
 
+    expect(findByEmail).toHaveBeenCalledWith(req.body.email);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({ message: `User with  email ${req.body.email} already exists` });
     expect(next).not.toHaveBeenCalled();
@@ -35,6 +36,7 @@ describe('check if the user has dyplicates middleware', () => {
 
     await checkUserDyplicates(req, res, next);
 
+    expect(findByEmail).toHaveBeenCalledWith(req.body.email);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalledTimes(1);
@@ -44,6 +46,8 @@ describe('check if the user has dyplicates middleware', () => {
     findByEmail.mockRejectedValue(new Error('Some error'));
 
     await expect(checkUserDyplicates(req, res, next)).rejects.toThrow('Error');
+
+    expect(findByEmail).toHaveBeenCalledWith(req.body.email);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
   });

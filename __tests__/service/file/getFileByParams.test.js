@@ -5,7 +5,7 @@ const File = require('../../../server/data-base/file');
 jest.mock('../../../server/api/file/file.util');
 jest.mock('../../../server/data-base/file');
 
-describe('get all file by sort&filter', () => {
+describe('getFileByParams', () => {
   let filesDB;
   let query;
   let emptyQuery;

@@ -3,7 +3,7 @@ const { createOauthPair } = require('../../../server/api/auth/auth.service');
 
 jest.mock('../../../server/data-base/OAuth');
 
-describe('this func can be write token pait in data base', () => {
+describe('createOauthPair', () => {
   let tokenData;
   beforeEach(() => {
     tokenData = {

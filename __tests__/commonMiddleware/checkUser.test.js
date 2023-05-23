@@ -25,6 +25,8 @@ describe('checkUser', () => {
 
   it('should add at req.locals finded user and call next  if user with the given ID was find', async () => {
     await checkUser(req, res, next);
+
+    expect(userService.getUserByID).toHaveBeenCalledWith(req.params.userId);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
     expect(req.locals).toEqual({ user: req.params.userId });
@@ -33,8 +35,10 @@ describe('checkUser', () => {
 
   it('should respond with an error message if user is not defined', async () => {
     req.params.userId = null;
+
     await checkUser(req, res, next);
 
+    expect(userService.getUserByID).toHaveBeenCalledWith(req.params.userId);
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: `User with id ${req.params.userId} is not defined` });
     expect(next).not.toHaveBeenCalled();
@@ -42,10 +46,14 @@ describe('checkUser', () => {
 
   it('should throw error if enexpected error', async () => {
     const error = new Error('enexpected error');
+
     userService.getUserByID.mockImplementationOnce(() => {
       throw error;
     });
+
     await expect(checkUser(req, res, next)).rejects.toThrow('Error: enexpected error');
+
+    expect(userService.getUserByID).toHaveBeenCalledWith(req.params.userId);
   });
 
   afterEach(() => {

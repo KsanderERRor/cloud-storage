@@ -3,7 +3,7 @@ const { deleteByParams } = require('../../../server/api/auth/auth.service');
 
 jest.mock('../../../server/data-base/OAuth');
 
-describe('this func can be delete all token in dataBase', () => {
+describe('deleteByParams', () => {
   let tokenData;
   beforeEach(() => {
     tokenData = {

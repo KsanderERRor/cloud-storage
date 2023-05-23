@@ -3,7 +3,7 @@ const userService = require('../user/user.service');
 const oauthService = require('../../services/oauth.service');
 
 module.exports = {
-  checkUser: async (req, res, next) => {
+  checkUserWasAlreadyCreate: async (req, res, next) => {
     try {
       const user = await userService.findByEmail(req.body.email);
 

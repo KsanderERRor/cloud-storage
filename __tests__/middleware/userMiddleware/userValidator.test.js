@@ -2,7 +2,7 @@ const { userValidator } = require('../../../server/api/user/user.middleware');
 
 const { ValidUserSchema } = require('../../../server/api/user/user.validator');
 
-describe('check user if  sends valid update-data  middleware', () => {
+describe('userValidator', () => {
   let req;
   let res;
   let next;
