@@ -3,11 +3,7 @@ const bcrypt = require('../../services/oauth.service');
 const userUtil = require('./user.util');
 
 module.exports = {
-  findByEmail: async (email) => {
-    const user = await User.findOne({ email });
-
-    return user;
-  },
+  findByEmail: (email) => User.findOne({ email }),
 
   createdUser: async (userObject) => {
     const hashPassword = await bcrypt.hashPassword(userObject.password);
@@ -15,9 +11,7 @@ module.exports = {
     return User.create({ ...userObject, password: hashPassword });
   },
 
-  deleteUserByID: async (userId) => {
-    await User.findByIdAndUpdate(userId, { $set: { is_deleted: true } });
-  },
+  deleteUserByID: async (userId) => User.findByIdAndUpdate(userId, { $set: { is_deleted: true } }),
 
   getUserByID: async (userId) => User.findById(userId),
 

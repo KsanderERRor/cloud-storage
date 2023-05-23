@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const userService = require('../api/user/user.service');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
       const user = await userService.getUserByID(req.params.userId);
 
       if (!user) {
-        res.json({ message: `User with id ${req.params.userId} is not defined` });
+        return res.status(404).json({ error: true, message: `User with id ${req.params.userId} is not defined` });
       }
 
       req.locals = { ...req.locals, user };
@@ -18,7 +19,14 @@ module.exports = {
   },
 
   userIsNotDeleted: (req, res, next) => {
-    if (req.locals.user.is_deleted === false) next();
-    else res.status(404).json({ error: true, message: 'user not found' });
+    try {
+      if (req.locals.user.is_deleted === false) {
+        next();
+      } else {
+        return res.status(404).json({ error: true, message: 'user not found' });
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 };

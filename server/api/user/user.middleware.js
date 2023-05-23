@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+
 const userService = require('./user.service');
 const validateSchema = require('./user.validator');
 
@@ -7,7 +9,7 @@ module.exports = {
       const user = await userService.findByEmail(req.body.email);
 
       if (user) {
-        res.status(400).json({ message: `User with  email ${user.email} already exists` });
+        return res.status(400).json({ message: `User with  email ${user.email} already exists` });
       }
 
       next();
@@ -20,7 +22,9 @@ module.exports = {
     try {
       const { error } = validateSchema.ValidUserSchema.validate(req.body);
 
-      if (error) throw new Error(error);
+      if (error) {
+        return res.status(422).json({ error: true, message: `${error.message}` });
+      }
 
       next();
     } catch (e) {
@@ -32,7 +36,9 @@ module.exports = {
     try {
       const { error } = validateSchema.ValidQuerySchema.validate(req.query);
 
-      if (error) throw new Error(error);
+      if (error) {
+        return res.status(422).json({ error: true, message: `${error.message}` });
+      }
 
       next();
     } catch (e) {
@@ -44,7 +50,9 @@ module.exports = {
     try {
       const { error } = validateSchema.ValidUserUpdateSchema.validate(req.body);
 
-      if (error) throw new Error(error);
+      if (error) {
+        return res.status(422).json({ error: true, message: `${error.message}` });
+      }
 
       next();
     } catch (e) {
