@@ -4,7 +4,7 @@ FROM node:latest
  WORKDIR /app
  
  COPY package.json /app
- COPY server/ /app
+ COPY src/ /app
  RUN npm install
 
  COPY . /app
