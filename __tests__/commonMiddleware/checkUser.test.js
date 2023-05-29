@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 const { checkUser } = require('../../server/commonMiddleware/common.middleware');
 const userService = require('../../server/api/user/user.service');
 

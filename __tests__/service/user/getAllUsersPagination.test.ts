@@ -1,10 +1,10 @@
 /* eslint-disable jest/expect-expect */
-const { getAllUsersPagination } = require('../../../server/api/user/user.service');
-const User = require('../../../server/data-base/user');
-const { buildFilterQuery } = require('../../../server/api/user/user.util');
+import userService from '../../../src/api/user/user.service';
+import User from '../../../src/data-base/user';
+import UserUtil from '../../../src/api/user/user.util';
 
-jest.mock('../../../server/data-base/user');
-jest.mock('../../../server/api/user/user.util');
+jest.mock('../../../src/data-base/user');
+jest.mock('../../../src/api/user/user.util');
 
 describe('get all user by sort&filter&pagination', () => {
   let query;
@@ -29,39 +29,39 @@ describe('get all user by sort&filter&pagination', () => {
   });
 
   it('should return dataUsers by sort', async () => {
-    buildFilterQuery.mockReturnValueOnce({});
+    UserUtil.buildFilterQuery = jest.fn().mockReturnValueOnce({});
 
-    User.count.mockReturnValue(UserDB.length);
+    User.count = jest.fn().mockReturnValue(UserDB.length);
 
     jest.spyOn(User, 'find').mockReturnValue({
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnValue(UserDB)
     });
 
-    await expect(getAllUsersPagination(query)).resolves.toEqual({
+    await expect(userService.getAllUsersPagination(query)).resolves.toEqual({
       dataUsers: UserDB,
       page: query.page,
       perPage: query.perPage,
       total: UserDB.length
     });
 
-    expect(buildFilterQuery).toHaveBeenCalledWith({ ...query.filterQuery });
+    expect(UserUtil.buildFilterQuery).toHaveBeenCalledWith({ ...query.filterQuery });
     expect(User.find).toHaveBeenCalledWith({});
     expect(User.find().skip).toHaveBeenCalledWith((query.page - 1) * query.perPage);
     expect(User.find().limit).toHaveBeenCalledWith(query.perPage);
   });
 
   it('should return dataUsers by filter', async () => {
-    buildFilterQuery.mockReturnValueOnce({});
+    UserUtil.buildFilterQuery = jest.fn().mockReturnValueOnce({});
 
-    User.count.mockReturnValue(1);
+    User.count = jest.fn().mockReturnValue(1);
 
     jest.spyOn(User, 'find').mockReturnValue({
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnValue(UserDB[1])
     });
 
-    await expect(getAllUsersPagination({ page: undefined, perPage: undefined, filterQuery: 'filterParams' })).resolves.toEqual({
+    await expect(userService.getAllUsersPagination({ page: undefined, perPage: undefined, filterQuery: 'something params' })).resolves.toEqual({
       dataUsers: UserDB[1],
       page: query.page,
       perPage: query.perPage,
@@ -69,7 +69,7 @@ describe('get all user by sort&filter&pagination', () => {
     });
 
     expect(User.find).toHaveBeenCalledWith({});
-    expect(buildFilterQuery).toHaveBeenCalledWith({ filterQuery: 'filterParams' });
+    expect(UserUtil.buildFilterQuery).toHaveBeenCalledWith({ filterQuery: 'filterParams' });
     expect(User.find().skip).toHaveBeenCalledWith((query.page - 1) * query.perPage);
     expect(User.find().limit).toHaveBeenCalledWith(query.perPage);
   });
