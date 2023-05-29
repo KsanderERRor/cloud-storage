@@ -58,7 +58,8 @@
     "prettier:check": "prettier --check .",
     "prepare": "husky install",
     "test": "jest",
-    "test --coverage": "jest --coverage"
+    "test --coverage": "jest --coverage",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
