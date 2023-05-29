@@ -1,10 +1,8 @@
-/* eslint-disable consistent-return */
 import { Request, Response, NextFunction } from 'express';
 import userService from './user.service';
 import validateSchema from './user.validator';
-import { IReqLocalUserAndReqParamsUserId } from '../../commonMiddleware/common.middleware';
-interface ResponseBody {}
-interface RequestParams {}
+import { TReqCorrectUser, TResLocalCorrectUser } from '../../commonMiddleware/common.middleware';
+
 interface RequestQuery {
   page?: number;
   perPage?: number;
@@ -14,7 +12,6 @@ interface RequestQuery {
   discSpace_gte?: number;
   discSpace_lte?: number;
 }
-
 interface RequestBodyCreateAndUpdate {
   email: string;
   password: string;
@@ -23,17 +20,16 @@ interface RequestBodyCreateAndUpdate {
   is_deleted: boolean;
   avatar: string;
 }
-// interface TReqUpdateUser extends IReqLocalUserAndReqParamsUserId {
 
-// }
-export type TypeCheckUserDublicate = Request<RequestParams, ResponseBody, RequestBodyCreateAndUpdate, RequestQuery>;
+export type TypeCheckUserDublicate = Request<any, any, RequestBodyCreateAndUpdate, RequestQuery>;
 export default {
-  checkUserDyplicates: async (req: TypeCheckUserDublicate, res: Response, next: NextFunction) => {
+  checkUserDyplicates: async (req: TypeCheckUserDublicate, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user = await userService.findByEmail(req.body.email);
 
       if (user) {
-        return res.status(400).json({ message: `User with  email ${user.email} already exists` });
+        res.status(400).json({ message: `User with  email ${user.email} already exists` });
+        return;
       }
 
       next();
@@ -42,12 +38,13 @@ export default {
     }
   },
 
-  userValidator: (req: TypeCheckUserDublicate, res: Response, next: NextFunction) => {
+  userValidator: (req: TypeCheckUserDublicate, res: Response, next: NextFunction): void => {
     try {
       const { error } = validateSchema.ValidUserSchema.validate(req.body);
 
       if (error) {
-        return res.status(422).json({ error: true, message: `${error.message}` });
+        res.status(422).json({ error: true, message: `${error.message}` });
+        return;
       }
 
       next();
@@ -56,12 +53,13 @@ export default {
     }
   },
 
-  QueryPaginationValidator: (req: Request<any, RequestQuery>, res: Response, next: NextFunction) => {
+  QueryPaginationValidator: (req: Request<any, RequestQuery>, res: Response, next: NextFunction): void => {
     try {
       const { error } = validateSchema.ValidQuerySchema.validate(req.query);
 
       if (error) {
-        return res.status(422).json({ error: true, message: `${error.message}` });
+        res.status(422).json({ error: true, message: `${error.message}` });
+        return;
       }
 
       next();
@@ -70,12 +68,13 @@ export default {
     }
   },
 
-  UpdateUserValidator: (req: Request, res: Response, next: NextFunction) => {
+  UpdateUserValidator: (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): void => {
     try {
       const { error } = validateSchema.ValidUserUpdateSchema.validate(req.body);
 
       if (error) {
-        return res.status(422).json({ error: true, message: `${error.message}` });
+        res.status(422).json({ error: true, message: `${error.message}` });
+        return;
       }
 
       next();

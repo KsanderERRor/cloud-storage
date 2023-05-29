@@ -1,46 +1,38 @@
-/* eslint-disable consistent-return */
-import { Request, Response, NextFunction, RequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import userService from '../user/user.service';
 import oauthService from '../../services/oauth.service';
 import { UserDocument } from '../../data-base/user';
 import { JwtPayload } from 'jsonwebtoken';
 import { TypeUserDocumentOrUndefinedOrNull } from '../user/user.service';
 
-// interface ResponseBody {}
-// interface RequestParams {}
-// interface  RequestQuery {}
-
-// interface RequestBody {
-//   email: string
-// }
-
 interface ILoginBody {
   email: string;
   password: string;
 }
-export interface IReqLoginUser extends Request<any, any, ILoginBody> {
-  locals: {
-    user: UserDocument;
-  };
+export type TReqLoginUser = Request<any, any, ILoginBody, any>;
+interface ILocalsUser extends Record<string, any> {
+  user: UserDocument;
 }
+export type TResLocals = Response<any, ILocalsUser>;
 
-export interface IReqLogoutUser extends Request {
-  locals: {
-    user: string | JwtPayload;
-  };
+export type TReqLogoutUser = Request;
+interface ILocalsValidateToken extends Record<string, any> {
+  decodetToken: string | JwtPayload;
+  accessToken: string;
 }
+export type TResLocalsValideteToken = Response<any, ILocalsValidateToken>;
 
 export default {
-  checkUserWasAlreadyCreate: async (req: IReqLoginUser, res: Response, next: NextFunction) => {
+  checkUserWasAlreadyCreate: async (req: TReqLoginUser, res: TResLocals, next: NextFunction): Promise<void> => {
     try {
       const user: TypeUserDocumentOrUndefinedOrNull = await userService.findByEmail(req.body.email);
-      console.log(user);
 
       if (!user) {
-        return res.status(400).json({ message: `User with  email ${req.body.email} not found` });
+        res.status(400).json({ message: `User with  email ${req.body.email} not found` });
+        return;
       }
 
-      req.locals = { ...req.locals, user };
+      res.locals = { ...res.locals, user };
 
       next();
     } catch (e: any) {
@@ -48,20 +40,27 @@ export default {
     }
   },
 
-  validateAccessToken: (req: IReqLogoutUser, res: Response, next: NextFunction) => {
+  validateAccessToken: (req: TReqLogoutUser, res: TResLocalsValideteToken, next: NextFunction): void => {
     try {
-      const accessToken = req.get('Authorization');
+      const accessToken: string | undefined = req.get('Authorization');
 
       if (!accessToken) {
-        return res.status(400).json({ message: 'token is not found' });
+        res.status(400).json({ message: 'token is not found' });
+        return;
       }
 
-      const user = oauthService.validateAccessToken(accessToken);
+      const decodedToken = oauthService.validateAccessToken(accessToken);
 
-      req.locals = { user };
+      if (!decodedToken) {
+        res.status(400).json({ message: 'token isn`t verified' });
+        return;
+      }
+
+      res.locals = { ...res.locals, accessToken, decodedToken };
+
       next();
     } catch (e: any) {
       throw new Error(e);
     }
   }
-} as unknown as { [key: string]: RequestHandler };
+};

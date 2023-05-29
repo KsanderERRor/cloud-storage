@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 import express from 'express';
 import mongoose from 'mongoose';
@@ -35,4 +34,7 @@ try {
   });
 } catch (e) {
   console.log(e);
+}
+function graphqlUploadExpress(arg0: { maxFileSize: number; maxFiles: number }): any {
+  throw new Error('Function not implemented.');
 }

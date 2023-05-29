@@ -1,6 +1,5 @@
 import joi from 'joi';
 
-import User, { UserDocument, UserInput } from '../../data-base/user';
 import { PASSWORD_REX } from '../../configs/regax';
 
 export default {

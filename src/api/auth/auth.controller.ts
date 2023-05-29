@@ -1,11 +1,11 @@
 import oauthService from '../../services/oauth.service';
 import service from './auth.service';
-import { Response } from 'express';
-import { IReqLoginUser, IReqLogoutUser } from './auth.middleware';
+import { NextFunction } from 'express';
+import { TReqLoginUser, TResLocals, TReqLogoutUser, TResLocalsValideteToken } from './auth.middleware';
 export default {
-  loginUser: async (req: IReqLoginUser, res) => {
+  loginUser: async (req: TReqLoginUser, res: TResLocals, next: NextFunction) => {
     try {
-      const { user } = req.locals;
+      const { user } = res.locals;
 
       await oauthService.checkPasswords(user.password, req.body.password);
       const tokenPair = oauthService.generateAccessTokenPair({ user: user._id });
@@ -21,12 +21,10 @@ export default {
     }
   },
 
-  logoutUser: async (req: IReqLogoutUser, res) => {
+  logoutUser: async (req: TReqLogoutUser, res: TResLocalsValideteToken, next: NextFunction) => {
     try {
-      const accessToken = req.get('Authorization');
-      if (!accessToken) {
-        throw new Error('token wasn`t defined');
-      }
+      const { accessToken } = res.locals;
+
       await service.deleteByParams({ accessToken });
 
       res.json('token was delete');

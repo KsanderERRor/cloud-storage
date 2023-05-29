@@ -1,5 +1,5 @@
-const util = require('util');
-const multer = require('multer');
+import util from 'util';
+import multer from 'multer';
 
 const maxSize = 2 * 1024 * 1024;
 
@@ -16,4 +16,4 @@ const upload = multer({ storage, limits: { fileSize: maxSize } });
 const uploadFile = upload.single('file');
 
 const uploadFileMiddleware = util.promisify(uploadFile);
-module.exports = uploadFileMiddleware;
+export default uploadFileMiddleware;

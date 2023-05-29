@@ -1,24 +1,21 @@
-/* eslint-disable consistent-return */
-import { Types } from 'mongoose';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 import userService from '../api/user/user.service';
-import { UserDocument, UserInput } from '../../src/data-base/user';
+import { UserDocument } from '../../src/data-base/user';
 
-interface ResponseBody {}
-interface RequestBody {}
-interface RequestQuery {}
+type TUpdateBady = UserDocument;
 interface IParamsUserId {
-  userId: Types.ObjectId;
+  userId: UserDocument['_id'];
 }
-export type IReqLocalUserAndReqParamsUserId = Request<IParamsUserId, ResponseBody, RequestBody, RequestQuery, Record<string, any>> & {
-  locals: {
-    user: UserDocument;
-  };
-};
+export type TReqCorrectUser = Request<IParamsUserId, any, TUpdateBady>;
+
+interface ILocal extends Record<string, any> {
+  user: UserDocument;
+}
+export type TResLocalCorrectUser = Response<any, ILocal>;
 
 export default {
-  checkUser: async (req: IReqLocalUserAndReqParamsUserId, res: Response, next: NextFunction): Promise<void> => {
+  checkUser: async (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): Promise<void> => {
     try {
       const user = await userService.getUserByID(req.params.userId);
 
@@ -27,7 +24,7 @@ export default {
         return;
       }
 
-      req.locals = { ...req.locals, user };
+      res.locals = { ...res.locals, user };
 
       next();
     } catch (e: any) {
@@ -35,12 +32,13 @@ export default {
     }
   },
 
-  userIsNotDeleted: (req: IReqLocalUserAndReqParamsUserId, res: Response, next: NextFunction) => {
+  userIsNotDeleted: (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): void => {
     try {
-      if (req.locals.user.is_deleted === false) {
+      if (res.locals.user.is_deleted === false) {
         next();
       } else {
-        return res.status(404).json({ error: true, message: 'user not found' });
+        res.status(404).json({ error: true, message: 'user not found' });
+        return;
       }
     } catch (e: any) {
       throw new Error(e);

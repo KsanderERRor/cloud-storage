@@ -2,7 +2,7 @@ import userService from './user.service';
 import { Request, Response, NextFunction } from 'express';
 
 import { TypeCheckUserDublicate } from './user.middleware';
-import { IReqLocalUserAndReqParamsUserId } from '../../commonMiddleware/common.middleware';
+import { TReqCorrectUser, TResLocalCorrectUser } from '../../commonMiddleware/common.middleware';
 
 export default {
   createUser: async (req: TypeCheckUserDublicate, res: Response, next: NextFunction) => {
@@ -25,7 +25,7 @@ export default {
     }
   },
 
-  deleteUser: async (req: IReqLocalUserAndReqParamsUserId, res, next): Promise<void> => {
+  deleteUser: async (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): Promise<void> => {
     try {
       await userService.deleteUserByID(req.params.userId);
 
@@ -35,7 +35,7 @@ export default {
     }
   },
 
-  getOneUserByID: async (req: IReqLocalUserAndReqParamsUserId, res, next) => {
+  getOneUserByID: async (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction) => {
     try {
       const user = await userService.getUserByID(req.params.userId);
 

@@ -13,7 +13,7 @@ type TRetunGenerateTokenPair = {
   refreshToken: string;
 };
 
-export default  {
+export default {
   hashPassword: (password: string): Promise<String> => bcrypt.hash(password, 15),
 
   checkPasswords: async (hashPassword: string, password: string): Promise<void> => {

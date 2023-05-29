@@ -1,17 +1,26 @@
 import File from '../../data-base/file';
-import fileUtil from './file.util';
+import buildFilterQuery from './file.util';
+import { IReqQueryParams } from './file.controller';
+import { IFileDocument, IFileInput } from '../../data-base/file';
+
+interface IReturnFiles {
+  data: IFileDocument[];
+  page: IReqQueryParams['page'];
+  perPage: IReqQueryParams['perPage'];
+  total: number;
+}
 
 export default {
-  createFile: async (filedata, id) => {
+  createFile: async (filedata: Express.Multer.File, id: IFileInput['user']): Promise<IFileDocument> => {
     const { filename, path, size } = filedata;
     return File.create({ path, size, name: filename, user: id });
   },
 
-  getFileByParams: async (queryParams) => {
+  getFileByParams: async (queryParams: IReqQueryParams): Promise<IReturnFiles> => {
     const { page = 1, perPage = 5, ...filterQuery } = queryParams;
     const skip = (page - 1) * perPage;
 
-    const search = fileUtil.buildFilterQuery(filterQuery);
+    const search = buildFilterQuery(filterQuery);
 
     const files = await File.find(search).skip(skip).limit(perPage);
 
