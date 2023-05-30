@@ -1,19 +1,8 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model} from 'mongoose';
 
-import User, { UserDocument } from './user';
+import User from './user';
+import { IFileDocument } from '../types/data-base/types';
 
-export interface IFileInput {
-  name: string;
-  size: number;
-  user: UserDocument['_id'];
-  path: string;
-}
-
-export interface IFileDocument extends IFileInput, Document {
-  _id: Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 const fileScheme = new Schema(
   {

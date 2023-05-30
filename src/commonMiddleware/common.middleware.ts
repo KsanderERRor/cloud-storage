@@ -1,21 +1,11 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express';
+import {NextFunction} from 'express';
 
 import userService from '../api/user/user.service';
-import { UserDocument } from '../../src/data-base/user';
+import {TReqCorrectUser,TResCorrectUserLocal} from '../types/apiRestGraphQl/commonMiddleware/types';
 
-type TUpdateBady = UserDocument;
-interface IParamsUserId {
-  userId: UserDocument['_id'];
-}
-export type TReqCorrectUser = Request<IParamsUserId, any, TUpdateBady>;
-
-interface ILocal extends Record<string, any> {
-  user: UserDocument;
-}
-export type TResLocalCorrectUser = Response<any, ILocal>;
 
 export default {
-  checkUser: async (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): Promise<void> => {
+  checkUser: async (req: TReqCorrectUser, res: TResCorrectUserLocal, next: NextFunction): Promise<void> => {
     try {
       const user = await userService.getUserByID(req.params.userId);
 
@@ -32,7 +22,7 @@ export default {
     }
   },
 
-  userIsNotDeleted: (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): void => {
+  userIsNotDeleted: (req: TReqCorrectUser, res: TResCorrectUserLocal, next: NextFunction): void => {
     try {
       if (res.locals.user.is_deleted === false) {
         next();

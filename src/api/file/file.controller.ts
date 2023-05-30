@@ -1,24 +1,8 @@
-import { Request, Response } from 'express';
+import {Response } from 'express';
 import uploadFile from './file.uploadFileMiddleware';
 import fileService from './file.service';
-import { IFileInput } from '../../data-base/file';
+import { TReqUpload,  TReqGetFile} from '../../types/apiRestGraphQl/file/types'
 
-interface IReqBody {
-  user: IFileInput['user'];
-}
-type TReqUpload = Request<any, any, IReqBody>;
-
-export interface IReqQueryParams {
-  page: number;
-  perPage: number;
-  name: string;
-  size_gte: number;
-  size_lte: number;
-  date_gte: Date;
-  date_lte: Date;
-  user: IFileInput['user'];
-}
-export type TReqGetFile = Request<any, any, any, IReqQueryParams>;
 
 export default {
   upload: async (req: TReqUpload, res: Response): Promise<void> => {
@@ -39,7 +23,7 @@ export default {
     }
   },
 
-  getFileByParams: async (req: TReqGetFile, res: Response) => {
+  getFileByParams: async (req: TReqGetFile, res: Response): Promise<void> => {
     try {
       const files = await fileService.getFileByParams(req.query);
 

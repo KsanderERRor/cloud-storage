@@ -1,21 +1,10 @@
-import { TypeCheckUserDublicate } from './user.middleware';
-function buildFilterQuery(query: TypeCheckUserDublicate['query']) {
-  type typeDiscSpaceFilter = {
-    $gte?: number;
-    $lte?: number;
-  };
-  type typeUserSpaceFilter = {
-    $gte?: number;
-    $lte?: number;
-  };
-  type typeFilterQuery = {
-    email?: string;
-    discSpace?: typeDiscSpaceFilter;
-    userSpace?: typeUserSpaceFilter;
-  };
-  const discSpaceFilter: typeDiscSpaceFilter = {};
-  const userSpaceFilter: typeUserSpaceFilter = {};
-  const filterQuery: typeFilterQuery = {};
+import { IDiscSpaceFilter,IFilterQuery,IQuery,IUserSpaceFilter} from "../../types/apiRestGraphQl/user/types";
+
+function buildFilterQuery(query: IQuery): IFilterQuery {
+
+  const discSpaceFilter: IDiscSpaceFilter = {};
+  const userSpaceFilter: IUserSpaceFilter = {};
+  const filterQuery: IFilterQuery = {};
   if (query.discSpace_gte) {
     discSpaceFilter.$gte = Number(query.discSpace_gte);
   }

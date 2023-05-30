@@ -1,17 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
-import { UserDocument } from '../data-base/user';
 import config from '../configs/variables';
+import {IEncodeData,IRetunGenerateTokenPair} from '../types/apiRestGraphQl/oauthService/types'
 
-type TEncodeData = {
-  user: UserDocument['_id'];
-};
-
-type TRetunGenerateTokenPair = {
-  accessToken: string;
-  refreshToken: string;
-};
 
 export default {
   hashPassword: (password: string): Promise<String> => bcrypt.hash(password, 15),
@@ -24,7 +16,7 @@ export default {
     }
   },
 
-  generateAccessTokenPair: (encodeData: TEncodeData): TRetunGenerateTokenPair => {
+  generateAccessTokenPair: (encodeData: IEncodeData): IRetunGenerateTokenPair => {
     const accessToken: string = jwt.sign(encodeData, config.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
     const refreshToken: string = jwt.sign(encodeData, config.REFRESH_TOKEN_SECRET, { expiresIn: '30d' });
 

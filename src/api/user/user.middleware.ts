@@ -1,29 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+
 import userService from './user.service';
 import validateSchema from './user.validator';
-import { TReqCorrectUser, TResLocalCorrectUser } from '../../commonMiddleware/common.middleware';
 
-interface RequestQuery {
-  page?: number;
-  perPage?: number;
-  email?: string;
-  userSpace_gte?: number;
-  userSpace_lte?: number;
-  discSpace_gte?: number;
-  discSpace_lte?: number;
-}
-interface RequestBodyCreateAndUpdate {
-  email: string;
-  password: string;
-  discSpace: number;
-  userSpace: number;
-  is_deleted: boolean;
-  avatar: string;
-}
+import { TReqRegistration, TReqGetUsers } from '../../types/apiRestGraphQl/user/types'
+import { TResCorrectUserLocal, TReqCorrectUser } from '../../types/apiRestGraphQl/commonMiddleware/types'
 
-export type TypeCheckUserDublicate = Request<any, any, RequestBodyCreateAndUpdate, RequestQuery>;
 export default {
-  checkUserDyplicates: async (req: TypeCheckUserDublicate, res: Response, next: NextFunction): Promise<void> => {
+  checkUserDyplicates: async (req: TReqRegistration, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user = await userService.findByEmail(req.body.email);
 
@@ -38,7 +22,7 @@ export default {
     }
   },
 
-  userValidator: (req: TypeCheckUserDublicate, res: Response, next: NextFunction): void => {
+  userValidator: (req: TReqRegistration, res: Response, next: NextFunction): void => {
     try {
       const { error } = validateSchema.ValidUserSchema.validate(req.body);
 
@@ -53,7 +37,7 @@ export default {
     }
   },
 
-  QueryPaginationValidator: (req: Request<any, RequestQuery>, res: Response, next: NextFunction): void => {
+  QueryPaginationValidator: (req: TReqGetUsers, res: Response, next: NextFunction): void => {
     try {
       const { error } = validateSchema.ValidQuerySchema.validate(req.query);
 
@@ -68,7 +52,7 @@ export default {
     }
   },
 
-  UpdateUserValidator: (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): void => {
+  UpdateUserValidator: (req: TReqCorrectUser, res: TResCorrectUserLocal, next: NextFunction): void => {
     try {
       const { error } = validateSchema.ValidUserUpdateSchema.validate(req.body);
 

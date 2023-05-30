@@ -1,11 +1,11 @@
 import userService from './user.service';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 
-import { TypeCheckUserDublicate } from './user.middleware';
-import { TReqCorrectUser, TResLocalCorrectUser } from '../../commonMiddleware/common.middleware';
+import {TReqRegistration,TReqGetUsers} from '../../types/apiRestGraphQl/user/types';
+import { TResCorrectUserLocal, TReqCorrectUser } from '../../types/apiRestGraphQl/commonMiddleware/types'
 
 export default {
-  createUser: async (req: TypeCheckUserDublicate, res: Response, next: NextFunction) => {
+  createUser: async (req: TReqRegistration, res: Response, next: NextFunction) => {
     try {
       const createdUser = await userService.createdUser(req.body);
 
@@ -15,7 +15,7 @@ export default {
     }
   },
 
-  getAllUsersPagination: async (req: TypeCheckUserDublicate, res: Response, next: NextFunction) => {
+  getAllUsersPagination: async (req: TReqGetUsers, res: Response, next: NextFunction) => {
     try {
       const users = await userService.getAllUsersPagination(req.query);
 
@@ -25,7 +25,7 @@ export default {
     }
   },
 
-  deleteUser: async (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction): Promise<void> => {
+  deleteUser: async (req: TReqCorrectUser, res: TResCorrectUserLocal, next: NextFunction): Promise<void> => {
     try {
       await userService.deleteUserByID(req.params.userId);
 
@@ -35,7 +35,7 @@ export default {
     }
   },
 
-  getOneUserByID: async (req: TReqCorrectUser, res: TResLocalCorrectUser, next: NextFunction) => {
+  getOneUserByID: async (req: TReqCorrectUser, res: TResCorrectUserLocal, next: NextFunction) => {
     try {
       const user = await userService.getUserByID(req.params.userId);
 
@@ -45,7 +45,7 @@ export default {
     }
   },
 
-  updateOneUserByID: async (req, res, next) => {
+  updateOneUserByID: async (req:TReqCorrectUser, res:TResCorrectUserLocal, next:NextFunction) => {
     try {
       await userService.updateUserByID(req.params.userId, req.body);
 

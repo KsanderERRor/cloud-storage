@@ -1,16 +1,13 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
-/* eslint-disable no-shadow */
-/* eslint-disable no-underscore-dangle */
-const User = require('../data-base/user');
-const validateSchema = require('../api/user/user.validator');
-const userService = require('../api/user/user.service');
-const oauthService = require('../services/oauth.service');
-const authService = require('../api/auth/auth.service');
-const uploadUtil = require('./upload.file.util');
-const fileService = require('../api/file/file.service');
 
-module.exports = {
+import User from '../data-base/user';
+import validateSchema from '../api/user/user.validator';
+import userService from '../api/user/user.service';
+import oauthService from '../services/oauth.service';
+import authService from '../api/auth/auth.service';
+import uploadUtil from './upload.file.util';
+import fileService from '../api/file/file.service';
+
+export default  {
   createUser: async (arg) => {
     try {
       const { error } = validateSchema.ValidUserSchema.validate(arg);
@@ -112,63 +109,63 @@ module.exports = {
 
   /// ///////////////////////////////////////////////////oauth/////////////////////////////////////////////////////////
 
-  loginUser: async (arg) => {
-    try {
-      const user = await userService.findByEmail(arg.email);
+  // loginUser: async (arg) => {
+  //   try {
+  //     const user = await userService.findByEmail(arg.email);
 
-      if (!user) {
-        console.log('___________-');
-        throw new Error(`User with  email ${user.email} not found`);
-      }
+  //     if (!user) {
+  //       console.log('___________-');
+  //       throw new Error(`User with  email ${user.email} not found`);
+  //     }
 
-      await oauthService.checkPasswords(user.password, arg.password);
-      const tokenPair = oauthService.generateAccessTokenPair({ user: user._id });
+  //     await oauthService.checkPasswords(user.password, arg.password);
+  //     const tokenPair = oauthService.generateAccessTokenPair({ user: user._id });
 
-      const tokens = (await authService.createOauthPair({ ...tokenPair, user: user._id })).toObject();
+  //     const tokens = (await authService.createOauthPair({ ...tokenPair, user: user._id })).toObject();
 
-      return { ...tokens, userData: user };
-    } catch (error) {
-      return error;
-    }
-  },
+  //     return { ...tokens, userData: user };
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // },
 
-  logoutUser: async (arg) => {
-    try {
-      const accessToken = arg.token;
-      console.log(accessToken);
-      await authService.deleteByParams({ accessToken });
-      return { message: 'user was delete' };
-    } catch (error) {
-      return error;
-    }
-  },
+  // logoutUser: async (arg) => {
+  //   try {
+  //     const accessToken = arg.token;
+  //     console.log(accessToken);
+  //     await authService.deleteByParams({ accessToken });
+  //     return { message: 'user was delete' };
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // },
 
   /// ///////////////////////////////////////////////////file/////////////////////////////////////////////////////////
 
-  upload: async ({ upload, user }) => {
-    try {
-      const { file } = upload;
-      console.log(file);
-      if (!file) {
-        throw new Error('Upload a file please!');
-      }
-      const resoult = await uploadUtil(file);
+//   upload: async ({ upload, user }) => {
+//     try {
+//       const { file } = upload;
+//       console.log(file);
+//       if (!file) {
+//         throw new Error('Upload a file please!');
+//       }
+//       const resoult = await uploadUtil(file);
 
-      await fileService.createFile(resoult, user);
+//       await fileService.createFile(resoult, user);
 
-      return { message: `The following file was uploaded successfully: ${file.filename}` };
-    } catch (error) {
-      return error;
-    }
-  },
+//       return { message: `The following file was uploaded successfully: ${file.filename}` };
+//     } catch (error) {
+//       return error;
+//     }
+//   },
 
-  getFilesPagination: async (arg) => {
-    try {
-      const files = await fileService.getFileByParams(arg);
+//   getFilesPagination: async (arg) => {
+//     try {
+//       const files = await fileService.getFileByParams(arg);
 
-      return files;
-    } catch (error) {
-      return error;
-    }
-  }
+//       return files;
+//     } catch (error) {
+//       return error;
+//     }
+//   }
 };

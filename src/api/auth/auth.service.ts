@@ -1,11 +1,12 @@
 import { FilterQuery } from 'mongoose';
-import OAuth, { IOauthDocument, IOauthInput } from '../../data-base/OAuth';
-type TDeleteTokinArg = {
-  accessToken: IOauthDocument['accessToken'];
-};
+
+import OAuth from '../../data-base/OAuth';
+import { IOauthDocument, IOauthInput } from "../../types/data-base/types";
+import { IDeleteTokenArg } from "../../types/apiRestGraphQl/auth/types";
+
+
 export default {
   createOauthPair: (tokenData: IOauthInput): Promise<IOauthDocument> => OAuth.create(tokenData),
 
-  // / im not shure about type for deleteData and type return
-  deleteByParams: (deleteData: FilterQuery<TDeleteTokinArg>) => OAuth.deleteMany(deleteData)
+  deleteByParams: (deleteData: FilterQuery<IDeleteTokenArg>) => OAuth.deleteMany(deleteData)
 };

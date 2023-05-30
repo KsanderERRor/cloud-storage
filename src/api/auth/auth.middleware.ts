@@ -1,31 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction } from 'express';
 import userService from '../user/user.service';
 import oauthService from '../../services/oauth.service';
-import { UserDocument } from '../../data-base/user';
-import { JwtPayload } from 'jsonwebtoken';
-import { TypeUserDocumentOrUndefinedOrNull } from '../user/user.service';
+import { TReqLoginUser,TReqLogoutUser,TResLocalsUser,TResLocalsValideteToken } from "../../types/apiRestGraphQl/auth/types";
 
-interface ILoginBody {
-  email: string;
-  password: string;
-}
-export type TReqLoginUser = Request<any, any, ILoginBody, any>;
-interface ILocalsUser extends Record<string, any> {
-  user: UserDocument;
-}
-export type TResLocals = Response<any, ILocalsUser>;
 
-export type TReqLogoutUser = Request;
-interface ILocalsValidateToken extends Record<string, any> {
-  decodetToken: string | JwtPayload;
-  accessToken: string;
-}
-export type TResLocalsValideteToken = Response<any, ILocalsValidateToken>;
 
 export default {
-  checkUserWasAlreadyCreate: async (req: TReqLoginUser, res: TResLocals, next: NextFunction): Promise<void> => {
+  checkUserWasAlreadyCreate: async (req: TReqLoginUser, res: TResLocalsUser, next: NextFunction): Promise<void> => {
     try {
-      const user: TypeUserDocumentOrUndefinedOrNull = await userService.findByEmail(req.body.email);
+      const user = await userService.findByEmail(req.body.email);
 
       if (!user) {
         res.status(400).json({ message: `User with  email ${req.body.email} not found` });

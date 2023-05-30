@@ -1,14 +1,9 @@
 import File from '../../data-base/file';
 import buildFilterQuery from './file.util';
-import { IReqQueryParams } from './file.controller';
-import { IFileDocument, IFileInput } from '../../data-base/file';
+import { TReqGetFile,IReturnFiles } from '../../types/apiRestGraphQl/file/types';
+import { IFileDocument, IFileInput } from '../../types/data-base/types';
 
-interface IReturnFiles {
-  data: IFileDocument[];
-  page: IReqQueryParams['page'];
-  perPage: IReqQueryParams['perPage'];
-  total: number;
-}
+
 
 export default {
   createFile: async (filedata: Express.Multer.File, id: IFileInput['user']): Promise<IFileDocument> => {
@@ -16,7 +11,7 @@ export default {
     return File.create({ path, size, name: filename, user: id });
   },
 
-  getFileByParams: async (queryParams: IReqQueryParams): Promise<IReturnFiles> => {
+  getFileByParams: async (queryParams: TReqGetFile['query']): Promise<IReturnFiles> => {
     const { page = 1, perPage = 5, ...filterQuery } = queryParams;
     const skip = (page - 1) * perPage;
 

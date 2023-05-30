@@ -1,17 +1,9 @@
-import { Schema, model, Document, Types } from 'mongoose';
-import User, { UserDocument } from './user';
+import { Schema, model} from 'mongoose';
 
-export interface IOauthInput {
-  accessToken: string;
-  refreshToken: string;
-  user: UserDocument['_id'];
-}
+import User from './user';
+import {IOauthDocument} from '../types/data-base/types'
 
-export interface IOauthDocument extends IOauthInput, Document {
-  _id: Types.ObjectId;
-  createdAt: Date;
-  updetedAt: Date;
-}
+
 const OAuthScheme = new Schema(
   {
     accessToken: { type: String, trim: true, required: true },

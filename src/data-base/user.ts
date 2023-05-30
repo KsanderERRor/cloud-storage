@@ -1,19 +1,7 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-export interface UserInput {
-  email: string;
-  password: string;
-  discSpace: number;
-  userSpace: number;
-  avatar: string;
-  is_deleted: boolean;
-}
+import {IUserDocument} from "../types/data-base/types"
 
-export interface UserDocument extends UserInput, Document {
-  _id: Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 const UserSchema = new Schema(
   {
@@ -39,4 +27,4 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-export default model<UserDocument>('User', UserSchema);
+export default model<IUserDocument>('User', UserSchema);

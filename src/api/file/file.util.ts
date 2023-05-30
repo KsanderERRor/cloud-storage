@@ -1,26 +1,4 @@
-import { IFileInput } from '../../data-base/file';
-interface IQuery {
-  name: string;
-  size_gte: number;
-  size_lte: number;
-  date_gte: Date;
-  date_lte: Date;
-  user: IFileInput['user'];
-}
-interface ISizeFilter {
-  $gte?: number;
-  $lte?: number;
-}
-interface IDataFilter {
-  $gte?: Date;
-  $lte?: Date;
-}
-interface IfilterQuery {
-  name?: IQuery['name'];
-  user?: IQuery['user'];
-  size?: ISizeFilter;
-  createdAt?: IDataFilter;
-}
+import { IDataFilter,IQuery,ISizeFilter,IfilterQuery } from "../../types/apiRestGraphQl/file/types";
 
 function buildFilterQuery(query: IQuery) {
   const sizeFilter: ISizeFilter = {};
