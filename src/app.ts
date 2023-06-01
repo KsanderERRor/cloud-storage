@@ -2,9 +2,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
-// import { graphqlUploadExpress } from 'graphql-upload';
-// import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js'
 
+import { graphqlUploadExpress } from 'graphql-upload-minimal';
 import config from './configs/variables';
 import mainRouter from './api/api.router';
 import swaggerDocument from './swagger.json';
@@ -20,12 +19,12 @@ mongoose.connect(config.MONGO_URL);
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', mainRouter);
-// app.use(
-//   graphqlUploadExpress({
-//     maxFileSize: 30000000,
-//     maxFiles: 20
-//   })
-// );
+app.use(
+  graphqlUploadExpress({
+    maxFileSize: 30000000,
+    maxFiles: 20
+  })
+);
 app.use('/graphql', grapglRouter);
 
 try {
@@ -34,7 +33,4 @@ try {
   });
 } catch (e) {
   console.log(e);
-}
-function graphqlUploadExpress(arg0: { maxFileSize: number; maxFiles: number }): any {
-  throw new Error('Function not implemented.');
 }
