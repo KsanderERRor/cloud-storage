@@ -58,6 +58,4 @@ export interface IReturnFiles {
   total: number;
 }
 
-
 export { IFileDocument };
-
