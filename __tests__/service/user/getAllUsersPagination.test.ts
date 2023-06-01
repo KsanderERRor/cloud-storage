@@ -33,7 +33,7 @@ describe('get all user by sort&filter&pagination', () => {
 
     User.count = jest.fn().mockReturnValue(UserDB.length);
 
-   (jest.spyOn(User, 'find')as jest.Mock).mockReturnValue({
+    (jest.spyOn(User, 'find') as jest.Mock).mockReturnValue({
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnValue(UserDB)
     });
@@ -56,12 +56,12 @@ describe('get all user by sort&filter&pagination', () => {
 
     User.count = jest.fn().mockReturnValue(1);
 
-    (jest.spyOn(User, 'find')as jest.Mock).mockReturnValue({
+    (jest.spyOn(User, 'find') as jest.Mock).mockReturnValue({
       limit: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnValue(UserDB[1])
     });
 
-    await expect(userService.getAllUsersPagination({ page: undefined, perPage: undefined, ...query})).resolves.toEqual({
+    await expect(userService.getAllUsersPagination({ page: undefined, perPage: undefined, ...query })).resolves.toEqual({
       dataUsers: UserDB[1],
       page: query.page,
       perPage: query.perPage,

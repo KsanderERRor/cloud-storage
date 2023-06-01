@@ -1,8 +1,7 @@
-import {NextFunction} from 'express';
+import { NextFunction } from 'express';
 
 import userService from '../api/user/user.service';
-import {TReqCorrectUser,TResCorrectUserLocal} from '../types/apiRestGraphQl/commonMiddleware/types';
-
+import { TReqCorrectUser, TResCorrectUserLocal } from '../types/apiRestGraphQl/commonMiddleware/types';
 
 export default {
   checkUser: async (req: TReqCorrectUser, res: TResCorrectUserLocal, next: NextFunction): Promise<void> => {

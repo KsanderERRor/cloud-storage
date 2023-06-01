@@ -1,9 +1,8 @@
 import User from '../../data-base/user';
 import bcrypt from '../../services/oauth.service';
 import userUtil from './user.util';
-import { IUserDocument,IUserInput } from "../../types/data-base/types";
-import {TReqGetUsers,IGetUsersReturn,TReturnDocumentOrNull } from '../../types/apiRestGraphQl/user/types';
-
+import { IUserDocument, IUserInput } from '../../types/data-base/types';
+import { TReqGetUsers, IGetUsersReturn, TReturnDocumentOrNull } from '../../types/apiRestGraphQl/user/types';
 
 export default {
   findByEmail: (email: IUserInput['email']): Promise<TReturnDocumentOrNull> => User.findOne({ email }),
@@ -27,7 +26,7 @@ export default {
     return User.findByIdAndUpdate(userId, updateData, { new: true });
   },
 
-  getAllUsersPagination: async (query:TReqGetUsers['query'] ): Promise<IGetUsersReturn> => {
+  getAllUsersPagination: async (query: TReqGetUsers['query']): Promise<IGetUsersReturn> => {
     const { page = 1, perPage = 5, ...filterQuery } = query;
     const skip = (page - 1) * perPage;
 

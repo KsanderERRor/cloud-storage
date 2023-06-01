@@ -1,32 +1,29 @@
-import {Request} from 'express'
+import { Request } from 'express';
 
-import { IFileDocument,IFileInput } from "../../data-base/types";
+import { IFileDocument, IFileInput } from '../../data-base/types';
 
 // ///////////////////////////////////////////////////////////////////////file/////////////////////////////
-
 
 // //// req for upload file
 export type TReqUpload = Request<any, any, IReqBody>;
 interface IReqBody {
-    user: IFileInput['user'];
+  user: IFileInput['user'];
 }
 
-
-// //// req for getALLFile pagination&sort&filter 
+// //// req for getALLFile pagination&sort&filter
 export type TReqGetFile = Request<any, any, any, IReqQueryParams>;
 interface IReqQueryParams {
-    page: number;
-    perPage: number;
-    name: string;
-    size_gte: number;
-    size_lte: number;
-    date_gte: Date;
-    date_lte: Date;
-    user: IFileInput['user'];
+  page: number;
+  perPage: number;
+  name: string;
+  size_gte: number;
+  size_lte: number;
+  date_gte: Date;
+  date_lte: Date;
+  user: IFileInput['user'];
 }
 
-
-// //// util interfaces 
+// //// util interfaces
 export interface IQuery {
   name: string;
   size_gte: number;
@@ -53,11 +50,10 @@ export interface IfilterQuery {
   createdAt?: IDataFilter;
 }
 
-
-// //// file service return interface 
+// //// file service return interface
 export interface IReturnFiles {
-    data: IFileDocument[];
-    page: IReqQueryParams['page']
-    perPage: IReqQueryParams['perPage'];
-    total: number;
+  data: IFileDocument[];
+  page: IReqQueryParams['page'];
+  perPage: IReqQueryParams['perPage'];
+  total: number;
 }

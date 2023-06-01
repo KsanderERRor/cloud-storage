@@ -2,8 +2,7 @@ import { NextFunction } from 'express';
 
 import oauthService from '../../services/oauth.service';
 import service from './auth.service';
-import { TReqLoginUser, TReqLogoutUser, TResLocalsUser, TResLocalsValideteToken } from "../../types/apiRestGraphQl/auth/types";
-
+import { TReqLoginUser, TReqLogoutUser, TResLocalsUser, TResLocalsValideteToken } from '../../types/apiRestGraphQl/auth/types';
 
 export default {
   loginUser: async (req: TReqLoginUser, res: TResLocalsUser, next: NextFunction) => {

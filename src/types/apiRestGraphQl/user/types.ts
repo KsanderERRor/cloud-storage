@@ -1,11 +1,10 @@
-import { Request, Response } from 'express'
-import { IUserDocument, IUserInput } from "../../data-base/types";
+import { Request, Response } from 'express';
+import { IUserDocument, IUserInput } from '../../data-base/types';
 
 // ///////////////////////////////////////////////////////////////////////user/////////////////////////////
 
-
 // //// Req for user middlewareQueryPaginationValidator &  getALlUserPagination endpoint
-export type TReqGetUsers = Request<any, any, any, IRequestQuery>
+export type TReqGetUsers = Request<any, any, any, IRequestQuery>;
 interface IRequestQuery {
   page?: number;
   perPage?: number;
@@ -15,8 +14,6 @@ interface IRequestQuery {
   discSpace_gte?: number;
   discSpace_lte?: number;
 }
-
-
 
 // //// Req for user middleware, create & update endpoint
 export type TReqRegistration = Request<any, any, IRequestBodyCreateAndUpdate, any>;
@@ -29,8 +26,7 @@ interface IRequestBodyCreateAndUpdate {
   avatar: string;
 }
 
-
-// /// User util interfaces 
+// /// User util interfaces
 export interface IQuery {
   email?: string | undefined;
   userSpace_gte?: number | undefined;
@@ -42,19 +38,18 @@ export interface IQuery {
 export interface IDiscSpaceFilter {
   $gte?: number;
   $lte?: number;
-};
+}
 export interface IUserSpaceFilter {
   $gte?: number;
   $lte?: number;
-};
+}
 export interface IFilterQuery {
   email?: string;
   discSpace?: IDiscSpaceFilter;
   userSpace?: IUserSpaceFilter;
-};
+}
 
-
-// ////User service return  interfaces and type 
+// ////User service return  interfaces and type
 export type TReturnDocumentOrNull = IUserDocument | null;
 
 export interface IGetUsersReturn {
@@ -62,4 +57,4 @@ export interface IGetUsersReturn {
   page: number;
   perPage: number;
   total: number;
-};
+}

@@ -1,9 +1,7 @@
 import { NextFunction } from 'express';
 import userService from '../user/user.service';
 import oauthService from '../../services/oauth.service';
-import { TReqLoginUser,TReqLogoutUser,TResLocalsUser,TResLocalsValideteToken } from "../../types/apiRestGraphQl/auth/types";
-
-
+import { TReqLoginUser, TReqLogoutUser, TResLocalsUser, TResLocalsValideteToken } from '../../types/apiRestGraphQl/auth/types';
 
 export default {
   checkUserWasAlreadyCreate: async (req: TReqLoginUser, res: TResLocalsUser, next: NextFunction): Promise<void> => {

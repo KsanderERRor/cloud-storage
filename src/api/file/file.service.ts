@@ -1,9 +1,7 @@
 import File from '../../data-base/file';
 import buildFilterQuery from './file.util';
-import { TReqGetFile,IReturnFiles } from '../../types/apiRestGraphQl/file/types';
+import { TReqGetFile, IReturnFiles } from '../../types/apiRestGraphQl/file/types';
 import { IFileDocument, IFileInput } from '../../types/data-base/types';
-
-
 
 export default {
   createFile: async (filedata: Express.Multer.File, id: IFileInput['user']): Promise<IFileDocument> => {

@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-import {IUserDocument} from "../types/data-base/types"
-
+import { IUserDocument } from '../types/data-base/types';
 
 const UserSchema = new Schema(
   {

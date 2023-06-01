@@ -1,8 +1,7 @@
-import {Response } from 'express';
+import { Response } from 'express';
 import uploadFile from './file.uploadFileMiddleware';
 import fileService from './file.service';
-import { TReqUpload,  TReqGetFile} from '../../types/apiRestGraphQl/file/types'
-
+import { TReqUpload, TReqGetFile } from '../../types/apiRestGraphQl/file/types';
 
 export default {
   upload: async (req: TReqUpload, res: Response): Promise<void> => {

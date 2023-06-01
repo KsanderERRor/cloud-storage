@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import User, { UserDocument } from '../../../src/data-base/user';
 import userService from '../../../src/api/user/user.service';
 
-jest.mock('../../../src/data-base/user', );
+jest.mock('../../../src/data-base/user');
 
 describe('delete user by id', () => {
   let userId: UserDocument['_id'];

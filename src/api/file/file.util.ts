@@ -1,4 +1,4 @@
-import { IDataFilter,IQuery,ISizeFilter,IfilterQuery } from "../../types/apiRestGraphQl/file/types";
+import { IDataFilter, IQuery, ISizeFilter, IfilterQuery } from '../../types/apiRestGraphQl/file/types';
 
 function buildFilterQuery(query: IQuery) {
   const sizeFilter: ISizeFilter = {};

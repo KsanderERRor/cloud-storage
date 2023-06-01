@@ -1,8 +1,7 @@
-import { Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 import User from './user';
 import { IFileDocument } from '../types/data-base/types';
-
 
 const fileScheme = new Schema(
   {

@@ -1,7 +1,6 @@
-import { IDiscSpaceFilter,IFilterQuery,IQuery,IUserSpaceFilter} from "../../types/apiRestGraphQl/user/types";
+import { IDiscSpaceFilter, IFilterQuery, IQuery, IUserSpaceFilter } from '../../types/apiRestGraphQl/user/types';
 
 function buildFilterQuery(query: IQuery): IFilterQuery {
-
   const discSpaceFilter: IDiscSpaceFilter = {};
   const userSpaceFilter: IUserSpaceFilter = {};
   const filterQuery: IFilterQuery = {};

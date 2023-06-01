@@ -3,8 +3,8 @@ import { Response, NextFunction } from 'express';
 import userService from './user.service';
 import validateSchema from './user.validator';
 
-import { TReqRegistration, TReqGetUsers } from '../../types/apiRestGraphQl/user/types'
-import { TResCorrectUserLocal, TReqCorrectUser } from '../../types/apiRestGraphQl/commonMiddleware/types'
+import { TReqRegistration, TReqGetUsers } from '../../types/apiRestGraphQl/user/types';
+import { TResCorrectUserLocal, TReqCorrectUser } from '../../types/apiRestGraphQl/commonMiddleware/types';
 
 export default {
   checkUserDyplicates: async (req: TReqRegistration, res: Response, next: NextFunction): Promise<void> => {

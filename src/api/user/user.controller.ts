@@ -1,8 +1,8 @@
 import userService from './user.service';
 import { Response, NextFunction } from 'express';
 
-import {TReqRegistration,TReqGetUsers} from '../../types/apiRestGraphQl/user/types';
-import { TResCorrectUserLocal, TReqCorrectUser } from '../../types/apiRestGraphQl/commonMiddleware/types'
+import { TReqRegistration, TReqGetUsers } from '../../types/apiRestGraphQl/user/types';
+import { TResCorrectUserLocal, TReqCorrectUser } from '../../types/apiRestGraphQl/commonMiddleware/types';
 
 export default {
   createUser: async (req: TReqRegistration, res: Response, next: NextFunction) => {
@@ -45,7 +45,7 @@ export default {
     }
   },
 
-  updateOneUserByID: async (req:TReqCorrectUser, res:TResCorrectUserLocal, next:NextFunction) => {
+  updateOneUserByID: async (req: TReqCorrectUser, res: TResCorrectUserLocal, next: NextFunction) => {
     try {
       await userService.updateUserByID(req.params.userId, req.body);
 

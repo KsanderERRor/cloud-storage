@@ -1,4 +1,3 @@
-
 import User from '../data-base/user';
 import validateSchema from '../api/user/user.validator';
 import userService from '../api/user/user.service';
@@ -7,7 +6,7 @@ import authService from '../api/auth/auth.service';
 import uploadUtil from './upload.file.util';
 import fileService from '../api/file/file.service';
 
-export default  {
+export default {
   createUser: async (arg) => {
     try {
       const { error } = validateSchema.ValidUserSchema.validate(arg);
@@ -105,7 +104,7 @@ export default  {
     } catch (error) {
       return error;
     }
-  },
+  }
 
   /// ///////////////////////////////////////////////////oauth/////////////////////////////////////////////////////////
 
@@ -142,30 +141,30 @@ export default  {
 
   /// ///////////////////////////////////////////////////file/////////////////////////////////////////////////////////
 
-//   upload: async ({ upload, user }) => {
-//     try {
-//       const { file } = upload;
-//       console.log(file);
-//       if (!file) {
-//         throw new Error('Upload a file please!');
-//       }
-//       const resoult = await uploadUtil(file);
+  //   upload: async ({ upload, user }) => {
+  //     try {
+  //       const { file } = upload;
+  //       console.log(file);
+  //       if (!file) {
+  //         throw new Error('Upload a file please!');
+  //       }
+  //       const resoult = await uploadUtil(file);
 
-//       await fileService.createFile(resoult, user);
+  //       await fileService.createFile(resoult, user);
 
-//       return { message: `The following file was uploaded successfully: ${file.filename}` };
-//     } catch (error) {
-//       return error;
-//     }
-//   },
+  //       return { message: `The following file was uploaded successfully: ${file.filename}` };
+  //     } catch (error) {
+  //       return error;
+  //     }
+  //   },
 
-//   getFilesPagination: async (arg) => {
-//     try {
-//       const files = await fileService.getFileByParams(arg);
+  //   getFilesPagination: async (arg) => {
+  //     try {
+  //       const files = await fileService.getFileByParams(arg);
 
-//       return files;
-//     } catch (error) {
-//       return error;
-//     }
-//   }
+  //       return files;
+  //     } catch (error) {
+  //       return error;
+  //     }
+  //   }
 };

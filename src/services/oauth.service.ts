@@ -2,8 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import config from '../configs/variables';
-import {IEncodeData,IRetunGenerateTokenPair} from '../types/apiRestGraphQl/oauthService/types'
-
+import { IEncodeData, IRetunGenerateTokenPair } from '../types/apiRestGraphQl/oauthService/types';
 
 export default {
   hashPassword: (password: string): Promise<String> => bcrypt.hash(password, 15),

@@ -1,8 +1,7 @@
-import { Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 import User from './user';
-import {IOauthDocument} from '../types/data-base/types'
-
+import { IOauthDocument } from '../types/data-base/types';
 
 const OAuthScheme = new Schema(
   {
