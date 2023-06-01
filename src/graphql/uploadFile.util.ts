@@ -2,7 +2,7 @@ import { FileUpload } from 'graphql-upload-minimal';
 import { ReadStream, createWriteStream } from 'fs';
 import { join } from 'path';
 
-import { IStoreUploadParams, IStoreUploadResult, IUploadResult } from '../types/apiRestGraphQl/file/types_Scalar_Upload';
+import { IStoreUploadParams, IStoreUploadResult, IUploadResult } from '../types/apiRestGraphQl/file/typesUpload';
 
 const storeUpload = async ({ stream, filename }: IStoreUploadParams): Promise<IStoreUploadResult> => {
   const uploadDir = './storage';

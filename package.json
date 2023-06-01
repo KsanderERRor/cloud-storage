@@ -55,7 +55,7 @@
   },
   "scripts": {
     "dev": "nodemon ./src/app.ts",
-    "start": "npx nodemon src/app.js",
+    "start": "npx nodemon build/app.js",
     "prettier:fix": "prettier --write .",
     "prettier:check": "prettier --check .",
     "prepare": "husky install",

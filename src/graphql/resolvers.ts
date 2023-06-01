@@ -3,14 +3,14 @@ import validateSchema from '../api/user/user.validator';
 import userService from '../api/user/user.service';
 import oauthService from '../services/oauth.service';
 import authService from '../api/auth/auth.service';
-import uploadUtil from './upload.file.util';
+import uploadUtil from './uploadFile.util';
 import fileService from '../api/file/file.service';
 
 import { TReqRegistration, TReqGetUsers, TReturnDocumentOrNull, IGetUsersReturn } from '../types/apiRestGraphQl/user/types';
 import { IUserDocument, IOauthDocument } from '../types/data-base/types';
 import { ILoginBody, IDeleteTokenArg } from '../types/apiRestGraphQl/auth/types';
 import { TReqGetFile, IReturnFiles } from '../types/apiRestGraphQl/file/types';
-import { IUploadArg, IUploadResult } from '../types/apiRestGraphQl/file/types_Scalar_Upload';
+import { IUploadArg, IUploadResult } from '../types/apiRestGraphQl/file/typesUpload';
 
 export default {
   createUser: async (arg: TReqRegistration['body']): Promise<IUserDocument | Error> => {
