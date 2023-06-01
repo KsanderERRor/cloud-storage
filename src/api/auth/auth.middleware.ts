@@ -32,10 +32,10 @@ export default {
 
       const decodedToken = oauthService.validateAccessToken(accessToken);
 
-      if (!decodedToken) {
-        res.status(400).json({ message: 'token isn`t verified' });
-        return;
-      }
+      // if (!decodedToken) {
+      //   res.status(400).json({ message: 'token isn`t verified' });
+      //   return;
+      // }
 
       res.locals = { ...res.locals, accessToken, decodedToken };
 

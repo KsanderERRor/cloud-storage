@@ -1,5 +1,5 @@
 import File from '../../data-base/file';
-import buildFilterQuery from './file.util';
+import util from './file.util';
 import { TReqGetFile, IReturnFiles } from '../../types/apiRestGraphQl/file/types';
 import { IFileDocument, IFileInput } from '../../types/data-base/types';
 
@@ -13,7 +13,7 @@ export default {
     const { page = 1, perPage = 5, ...filterQuery } = queryParams;
     const skip = (page - 1) * perPage;
 
-    const search = buildFilterQuery(filterQuery);
+    const search = util.buildFilterQuery(filterQuery);
 
     const files = await File.find(search).skip(skip).limit(perPage);
 

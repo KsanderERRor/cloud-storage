@@ -1,6 +1,6 @@
 import { IDataFilter, IQuery, ISizeFilter, IfilterQuery } from '../../types/apiRestGraphQl/file/types';
 
-function buildFilterQuery(query: IQuery) {
+function buildFilterQuery(query: IQuery): IfilterQuery {
   const sizeFilter: ISizeFilter = {};
   const dataFilter: IDataFilter = {};
   const filterQuery: IfilterQuery = {};
@@ -38,4 +38,6 @@ function buildFilterQuery(query: IQuery) {
   return filterQuery;
 }
 
-export default buildFilterQuery;
+export default {
+  buildFilterQuery
+};

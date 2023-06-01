@@ -1,18 +1,20 @@
 import { Types } from 'mongoose';
-import User, { UserDocument } from '../../../src/data-base/user';
+
+import User from '../../../src/data-base/user';
 import userService from '../../../src/api/user/user.service';
+
+import { IUserDocument } from '../../../src/types/data-base/types';
 
 jest.mock('../../../src/data-base/user');
 
 describe('delete user by id', () => {
-  let userId: UserDocument['_id'];
+  let userId: IUserDocument['_id'];
 
   beforeEach(() => {
     userId = new Types.ObjectId();
   });
 
   it('should function created user worked successfully', async () => {
-    // const mockUpdateFn = jest.fn().mockResolvedValueOnce(true);
     (User.findByIdAndUpdate as jest.Mock).mockResolvedValueOnce(true);
 
     await userService.deleteUserByID(userId);

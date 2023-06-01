@@ -12,25 +12,25 @@ interface IReqBody {
 
 // //// req for getALLFile pagination&sort&filter
 export type TReqGetFile = Request<any, any, any, IReqQueryParams>;
-interface IReqQueryParams {
-  page: number;
-  perPage: number;
-  name: string;
-  size_gte: number;
-  size_lte: number;
-  date_gte: Date;
-  date_lte: Date;
-  user: IFileInput['user'];
+export interface IReqQueryParams {
+  page?: number;
+  perPage?: number;
+  name?: string;
+  size_gte?: number;
+  size_lte?: number;
+  date_gte?: Date;
+  date_lte?: Date;
+  user?: IFileInput['user'];
 }
 
 // //// util interfaces
 export interface IQuery {
-  name: string;
-  size_gte: number;
-  size_lte: number;
-  date_gte: Date;
-  date_lte: Date;
-  user: IFileInput['user'];
+  name?: string;
+  size_gte?: number;
+  size_lte?: number;
+  date_gte?: Date;
+  date_lte?: Date;
+  user?: IFileInput['user'];
 }
 
 export interface ISizeFilter {

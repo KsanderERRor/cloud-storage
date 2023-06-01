@@ -1,11 +1,14 @@
-const { QueryPaginationValidator } = require('../../../server/api/user/user.middleware');
+import { Response, NextFunction } from 'express';
+import userMdlwr from '../../../src/api/user/user.middleware';
 
-const { ValidQuerySchema } = require('../../../server/api/user/user.validator');
+import validateSchema from '../../../src/api/user/user.validator';
+
+import { TReqGetUsers } from '../../../src/types/apiRestGraphQl/user/types';
 
 describe('check user if  sends valid query-data  middleware', () => {
-  let req;
-  let res;
-  let next;
+  let req: TReqGetUsers;
+  let res: Response;
+  let next: NextFunction;
   let spyForValidate;
   beforeEach(() => {
     req = {
@@ -18,17 +21,17 @@ describe('check user if  sends valid query-data  middleware', () => {
         userSpace_lte: 1,
         email: 'example@example.com'
       }
-    };
+    } as TReqGetUsers;
     res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn()
-    };
+    } as unknown as Response;
     next = jest.fn();
-    spyForValidate = jest.spyOn(ValidQuerySchema, 'validate');
+    spyForValidate = jest.spyOn(validateSchema.ValidQuerySchema, 'validate');
   });
 
-  it('should call next  if user sends valid query', async () => {
-    await QueryPaginationValidator(req, res, next);
+  it('should call next  if user sends valid query', () => {
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -36,9 +39,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should call next  if user sends empty query', async () => {
+  it('should call next  if user sends empty query', () => {
     req.query = {};
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -46,9 +49,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should respond with an error message if user sends invalid page', async () => {
+  it('should respond with an error message if user sends invalid page', () => {
     req.query.page = 100001;
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: 'input is out of range' });
@@ -56,9 +59,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should respond with an error message if user sends invalid perPage', async () => {
+  it('should respond with an error message if user sends invalid perPage', () => {
     req.query.perPage = 100001;
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: 'input is out of range' });
@@ -66,9 +69,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should respond with an error message if user sends invalid email', async () => {
+  it('should respond with an error message if user sends invalid email', () => {
     req.query.email = 'wrongEmail';
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: 'email is not valid' });
@@ -76,9 +79,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should respond with an error message if user sends invalid discSpace_gte', async () => {
+  it('should respond with an error message if user sends invalid discSpace_gte', () => {
     req.query.discSpace_gte = 100001;
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: 'input is out of range' });
@@ -86,9 +89,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should respond with an error message if user sends discSpace_lte', async () => {
+  it('should respond with an error message if user sends discSpace_lte', () => {
     req.query.discSpace_lte = 100001;
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: 'input is out of range' });
@@ -96,9 +99,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should respond with an error message if user sends userSpace_gte', async () => {
+  it('should respond with an error message if user sends userSpace_gte', () => {
     req.query.userSpace_gte = 100001;
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: 'input is out of range' });
@@ -106,9 +109,9 @@ describe('check user if  sends valid query-data  middleware', () => {
     expect(spyForValidate).toHaveBeenCalledWith(req.query);
   });
 
-  it('should respond with an error message if user sends userSpace_lte', async () => {
+  it('should respond with an error message if user sends userSpace_lte', () => {
     req.query.userSpace_lte = 100001;
-    await QueryPaginationValidator(req, res, next);
+    userMdlwr.QueryPaginationValidator(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith({ error: true, message: 'input is out of range' });
@@ -122,7 +125,7 @@ describe('check user if  sends valid query-data  middleware', () => {
       throw error;
     });
 
-    expect(() => QueryPaginationValidator(req, res, next)).toThrow();
+    expect(() => userMdlwr.QueryPaginationValidator(req, res, next)).toThrow();
 
     expect(next).not.toHaveBeenCalled();
   });

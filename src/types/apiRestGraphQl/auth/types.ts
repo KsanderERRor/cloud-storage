@@ -7,7 +7,7 @@ import { IUserDocument, IOauthDocument } from '../../data-base/types';
 
 // ////Req for checkUserWasAlreadyCreate middleware & login endpoint
 export type TReqLoginUser = Request<any, any, ILoginBody, any>;
-interface ILoginBody {
+export interface ILoginBody {
   email: string;
   password: string;
 }

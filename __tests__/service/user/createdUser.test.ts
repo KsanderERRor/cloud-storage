@@ -1,18 +1,20 @@
 import userService from '../../../src/api/user/user.service';
-// import User from '../../../src/data-base/user';
+
 import bcrypt from '../../../src/services/oauth.service';
-import User, { UserDocument, UserInput } from '../../../src/data-base/user';
+import User from '../../../src/data-base/user';
+
+import { IUserInput } from '../../../src/types/data-base/types';
 
 jest.mock('../../../src/data-base/user', () => ({
-  create: jest.fn((arg: UserInput): UserInput => arg)
+  create: jest.fn((arg: IUserInput): IUserInput => arg)
 }));
 jest.mock('../../../src/services/oauth.service', () => ({
-  hashPassword: jest.fn((arg: UserInput['password']): string => 'hashedPassword')
+  hashPassword: jest.fn((arg: IUserInput['password']): string => 'hashedPassword')
 }));
 
 describe('create user', () => {
   it('should return correct user', async () => {
-    const userObject: UserInput = {
+    const userObject: IUserInput = {
       email: 'fake_email',
       password: 'fake_password',
       discSpace: 1,

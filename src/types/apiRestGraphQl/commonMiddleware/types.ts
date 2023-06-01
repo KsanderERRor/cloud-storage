@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { IUserDocument } from '../../data-base/types';
+import { IUserInput, IUserDocument } from '../../data-base/types';
 
 // ///////////////////////////////////////////////////////////////////////commonMiddleware/////////////////////////////
 
 // ////Req for all //:userId endpoints
 export type TReqCorrectUser = Request<IParamsUserId, any, TUpdateBady>;
-type TUpdateBady = IUserDocument;
+type TUpdateBady = IUserInput;
 interface IParamsUserId {
   userId: IUserDocument['_id'];
 }

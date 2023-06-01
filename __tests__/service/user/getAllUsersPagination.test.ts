@@ -1,30 +1,49 @@
-/* eslint-disable jest/expect-expect */
+import { Types } from 'mongoose';
+
 import userService from '../../../src/api/user/user.service';
 import User from '../../../src/data-base/user';
 import UserUtil from '../../../src/api/user/user.util';
+
+import { IUserDocument } from '../../../src/types/data-base/types';
+import { TReqGetUsers } from '../../../src/types/apiRestGraphQl/user/types';
 
 jest.mock('../../../src/data-base/user');
 jest.mock('../../../src/api/user/user.util');
 
 describe('get all user by sort&filter&pagination', () => {
-  let query;
-  let UserDB;
+  let query: TReqGetUsers['query'];
+  let UserDB: IUserDocument[];
 
   beforeEach(() => {
     query = {
       page: 1,
       perPage: 5,
-      filterQuery: undefined
+      discSpace_lte: 1,
+      email: 'fake_email'
     };
     UserDB = [
-      {
-        email: 'email1',
-        userSpace: 1
-      },
-      {
-        email: 'email2',
-        userSpace: 2
-      }
+      new User({
+        _id: new Types.ObjectId(),
+        email: 'fake_email',
+        password: 'fake_password',
+        diskSpace: 2,
+        userSpace: 3,
+        avatar: 'fake_avatar',
+        is_deleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }),
+      new User({
+        _id: new Types.ObjectId(),
+        email: 'fake_email',
+        password: 'fake_password',
+        diskSpace: 2,
+        userSpace: 3,
+        avatar: 'fake_avatar',
+        is_deleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
     ];
   });
 
@@ -45,9 +64,9 @@ describe('get all user by sort&filter&pagination', () => {
       total: UserDB.length
     });
 
-    expect(UserUtil.buildFilterQuery).toHaveBeenCalledWith({ ...query.filterQuery });
+    expect(UserUtil.buildFilterQuery).toHaveBeenCalledWith({ discSpace_lte: 1, email: 'fake_email' });
     expect(User.find).toHaveBeenCalledWith({});
-    expect(User.find().skip).toHaveBeenCalledWith((query.page - 1) * query.perPage);
+    expect(User.find().skip).toHaveBeenCalledWith(0);
     expect(User.find().limit).toHaveBeenCalledWith(query.perPage);
   });
 
@@ -69,8 +88,8 @@ describe('get all user by sort&filter&pagination', () => {
     });
 
     expect(User.find).toHaveBeenCalledWith({});
-    expect(UserUtil.buildFilterQuery).toHaveBeenCalledWith({ filterQuery: 'filterParams' });
-    expect(User.find().skip).toHaveBeenCalledWith((query.page - 1) * query.perPage);
+    expect(UserUtil.buildFilterQuery).toHaveBeenCalledWith({ discSpace_lte: 1, email: 'fake_email' });
+    expect(User.find().skip).toHaveBeenCalledWith(0);
     expect(User.find().limit).toHaveBeenCalledWith(query.perPage);
   });
 

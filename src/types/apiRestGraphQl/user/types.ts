@@ -15,9 +15,9 @@ interface IRequestQuery {
   discSpace_lte?: number;
 }
 
-// //// Req for user middleware, create & update endpoint
-export type TReqRegistration = Request<any, any, IRequestBodyCreateAndUpdate, any>;
-interface IRequestBodyCreateAndUpdate {
+// //// Req for user middleware, create endpoint
+export type TReqRegistration = Request<any, any, IRequestBodyCreate, any>;
+interface IRequestBodyCreate {
   email: string;
   password: string;
   discSpace: number;
@@ -26,6 +26,16 @@ interface IRequestBodyCreateAndUpdate {
   avatar: string;
 }
 
+// //// Req for user middleware update endpoint
+export type TReqUpdateUser = Request<any, any, IRequestBodyUpdate, any>;
+export interface IRequestBodyUpdate {
+  email?: string;
+  password?: string;
+  discSpace?: number;
+  userSpace?: number;
+  is_deleted?: boolean;
+  avatar?: string;
+}
 // /// User util interfaces
 export interface IQuery {
   email?: string | undefined;

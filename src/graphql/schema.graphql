@@ -39,7 +39,7 @@ type FilesPagination {
 }
 
 type Query {
-  getOneUserById(id: ID!): User
+  getOneUserById(_id: ID!): User
   getUsersPagination(page: Int, perPage: Int, discSpace_gte: Int, discSpace_lte: Int, userSpace_gte: Int, userSpace_lte: Int, email: String): UserPagination!
   getFilesPagination(page: Int, perPage: Int, size_gte: Int, size_lte: Int, date_gte: Date, date_lte: Date, name: String, user: ID): FilesPagination
 }
@@ -47,10 +47,10 @@ scalar Upload
 scalar Date
 type Mutation {
   createUser(email: String!, password: String!, discSpace: Int, userSpace: Int, avatar: String, is_deleted: Boolean): User
-  deleteUser(id: ID!): User
-  updateUser(id: ID!, email: String, password: String, discSpace: Int, userSpace: Int, avatar: String): User
+  deleteUser(_id: ID!): User
+  updateUser(_id: ID!, email: String, password: String, discSpace: Int, userSpace: Int, avatar: String): User
   loginUser(email: String!, password: String!): Tokens
-  logoutUser(token: String!): message
+  logoutUser(accessToken: String!): message
   upload(upload: Upload!, user: ID!): message
 }
 

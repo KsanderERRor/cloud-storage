@@ -2,7 +2,7 @@ import User from '../../data-base/user';
 import bcrypt from '../../services/oauth.service';
 import userUtil from './user.util';
 import { IUserDocument, IUserInput } from '../../types/data-base/types';
-import { TReqGetUsers, IGetUsersReturn, TReturnDocumentOrNull } from '../../types/apiRestGraphQl/user/types';
+import { TReqGetUsers, IGetUsersReturn, TReturnDocumentOrNull, IRequestBodyUpdate } from '../../types/apiRestGraphQl/user/types';
 
 export default {
   findByEmail: (email: IUserInput['email']): Promise<TReturnDocumentOrNull> => User.findOne({ email }),
@@ -17,9 +17,9 @@ export default {
 
   getUserByID: (userId: IUserDocument['_id']): Promise<TReturnDocumentOrNull> => User.findById(userId),
 
-  updateUserByID: (userId: IUserDocument['_id'], updateData: IUserInput): Promise<TReturnDocumentOrNull> => {
+  updateUserByID: async (userId: IUserDocument['_id'], updateData: IRequestBodyUpdate): Promise<TReturnDocumentOrNull> => {
     if (updateData.password !== undefined) {
-      const hashPassword = bcrypt.hashPassword(updateData.password);
+      const hashPassword = await bcrypt.hashPassword(updateData.password);
       return User.findByIdAndUpdate(userId, { ...updateData, password: hashPassword }, { new: true });
     }
 

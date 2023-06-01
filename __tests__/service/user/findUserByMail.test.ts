@@ -1,10 +1,12 @@
-import User, { UserDocument, UserInput } from '../../../src/data-base/user';
+import User from '../../../src/data-base/user';
 import userService from '../../../src/api/user/user.service';
+
+import { IUserInput } from '../../../src/types/data-base/types';
 
 jest.mock('../../../src/data-base/user');
 
 describe('find single user by email', () => {
-  let email: UserInput['email'];
+  let email: IUserInput['email'];
   beforeEach(() => {
     email = 'fake_email';
   });
