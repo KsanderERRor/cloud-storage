@@ -57,3 +57,7 @@ export interface IReturnFiles {
   perPage: IReqQueryParams['perPage'];
   total: number;
 }
+
+
+export { IFileDocument };
+

@@ -6,10 +6,13 @@ import authService from '../api/auth/auth.service';
 import uploadUtil from './upload.file.util';
 import fileService from '../api/file/file.service';
 
+
 import { TReqRegistration, TReqGetUsers, TReturnDocumentOrNull, IGetUsersReturn } from '../types/apiRestGraphQl/user/types';
 import { IUserDocument, IOauthDocument } from '../types/data-base/types';
 import { ILoginBody, IDeleteTokenArg } from '../types/apiRestGraphQl/auth/types';
 import { TReqGetFile, IReturnFiles } from '../types/apiRestGraphQl/file/types';
+import {IUploadArg,IUploadResult} from '../types/apiRestGraphQl/file/types_Scalar_Upload'
+
 
 export default {
   createUser: async (arg: TReqRegistration['body']): Promise<IUserDocument | Error> => {
@@ -146,18 +149,17 @@ export default {
 
   /// ///////////////////////////////////////////////////file/////////////////////////////////////////////////////////
 
-  upload: async ({ upload, user }: Iupload) => {
+  upload: async ({ upload, user }:IUploadArg) => {
     try {
-      console.log(upload);
 
       const { file } = upload;
-      console.log(file);
+
       if (!file) {
         throw new Error('Upload a file please!');
       }
-      const resoult = await uploadUtil(file);
+      const resoult:IUploadResult = await uploadUtil(file);
 
-      // await fileService.createFile(resoult, user);
+      await fileService.createFile((resoult as Express.Multer.File), user);
 
       return { message: `The following file was uploaded successfully: ${file.filename}` };
     } catch (error: any) {
@@ -176,21 +178,4 @@ export default {
   }
 };
 
-interface Iupload {
-  upload: {
-    file: any;
-  };
-  user: string;
-}
-interface IReturnUpload {
-  file: {
-    __typename?: string;
-    _id?: string;
-    createdAt?: Date;
-    name: string;
-    path?: string;
-    size?: number;
-    updatedAt?: Date;
-    user: string;
-  };
-}
+
