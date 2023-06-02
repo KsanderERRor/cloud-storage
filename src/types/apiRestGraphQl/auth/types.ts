@@ -34,7 +34,7 @@ export interface IDeleteTokenArg {
 }
 
 // //// Return for  oauth service deleteByParams
-export interface IDeleteResult  {
-  acknowledged: boolean
-  deletedCount: number
+export interface IDeleteResult {
+  acknowledged: boolean;
+  deletedCount: number;
 }
