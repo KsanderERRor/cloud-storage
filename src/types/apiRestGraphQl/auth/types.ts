@@ -32,3 +32,9 @@ interface ILocalsValidateToken extends Record<string, any> {
 export interface IDeleteTokenArg {
   accessToken: IOauthDocument['accessToken'];
 }
+
+// //// Return for  oauth service deleteByParams
+export interface IDeleteResult  {
+  acknowledged: boolean
+  deletedCount: number
+}

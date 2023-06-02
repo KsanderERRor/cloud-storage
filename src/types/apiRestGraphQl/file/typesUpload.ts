@@ -1,4 +1,4 @@
-import { ReadStream, createWriteStream } from 'fs';
+import { ReadStream,} from 'fs';
 import { Upload } from 'graphql-upload-minimal';
 import { Types } from 'mongoose';
 

@@ -14,7 +14,6 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^2.0.22",
     "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {
@@ -38,6 +37,7 @@
     "husky": "^8.0.3",
     "jest": "^29.5.0",
     "lint-staged": "^13.2.0",
+    "nodemon": "^2.0.22",
     "prettier": "2.8.7",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
@@ -55,7 +55,7 @@
   },
   "scripts": {
     "dev": "nodemon ./src/app.ts",
-    "start": "npx nodemon build/app.js",
+    "start": "nodemon build/app.js",
     "prettier:fix": "prettier --write .",
     "prettier:check": "prettier --check .",
     "prepare": "husky install",
